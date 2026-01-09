@@ -44,7 +44,7 @@ This project is strictly for **personal research and educational purposes**. We 
 ## 📂 Repository Structure
 
 ```text
-ZombieWaves-AI-Codex/
+Project-Codex/
 ├── scrapers/           # PRAW and Web Extraction scripts
 ├── processing/         # Data cleaning & JSONL formatting
 ├── docs/               # Strategy logic & research notes
