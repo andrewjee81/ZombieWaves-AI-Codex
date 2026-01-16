@@ -48,7 +48,7 @@ Follow these steps to set up the environment on your local workstation.
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/andrewjee81/ZombieWaves-AI-Codex.git](https://github.com/andrewjee81/ZombieWaves-AI-Codex.git)
+git clone https://github.com/andrewjee81/ZombieWaves-AI-Codex.git
 cd ZombieWaves-AI-Codex
 ```
 
