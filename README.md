@@ -73,16 +73,6 @@ python scraper_skeleton.py
 ```
 
 ---
-⚖️ Ethics & Compliance
-This project is strictly for personal research and educational purposes.
-
-Official Channels: Data collection is performed exclusively through the official Reddit Data API.
-
-Rate Limiting: All scripts strictly adhere to the 60 Requests Per Minute (RPM) threshold.
-
-Privacy: No Personally Identifiable Information (PII) is stored. The anonymize_data() function redacts user identity upon ingestion.
-
-Data Hygiene: Routine scripts verify the status of stored content; if a post is deleted on the platform, it is purged from our local research dataset.
 
 ## ⚖️ Ethics & Compliance
 
