@@ -1,0 +1,42 @@
+# --- SENSITIVE DATA (CRITICAL) ---
+.env
+secrets.json
+*.pem
+credentials/
+
+# --- EXTERNAL STORAGE / DATA LAKE ---
+# We ignore the local data folders because they belong on your SSD
+data/
+datasets/
+raw_scraped/
+*.jsonl
+*.csv
+*.md
+!README.md
+
+# --- PYTHON SETTINGS ---
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+build/
+dist/
+*.egg-info/
+
+# --- AI/ML ARTIFACTS ---
+# Ignore large model files and checkpoints
+models/
+checkpoints/
+*.bin
+*.pt
+*.pth
+*.gguf
+
+# --- SYSTEM & IDE ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
