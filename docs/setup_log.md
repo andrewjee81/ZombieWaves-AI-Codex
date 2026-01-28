@@ -1,5 +1,3 @@
-Markdown
-
 # Project Codex: Environment Bootstrap Log
 **Author:** andrewjee81  
 **Target System:** ASUS Gaming Rig (RTX GPU)  
