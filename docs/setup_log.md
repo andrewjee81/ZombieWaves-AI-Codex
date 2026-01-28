@@ -75,7 +75,7 @@ conda tos accept --override-channels --channel [https://repo.anaconda.com/pkgs/m
 conda install -y "mkl<2024.1" "intel-openmp<2024.1"
 ```
 
-##6. Final Validation
+## 6. Final Validation
 Final check to confirm PyTorch can access the GPU tensors:
 
 ```Bash
