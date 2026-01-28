@@ -6,12 +6,12 @@ credentials/
 
 # --- EXTERNAL STORAGE / DATA LAKE ---
 # We ignore the local data folders because they belong on your SSD
-data/
-datasets/
-raw_scraped/
-*.jsonl
-*.csv
-*.md
+#data/
+#datasets/
+#raw_scraped/
+#*.jsonl
+#*.csv
+#*.md
 !README.md
 
 # --- PYTHON SETTINGS ---
