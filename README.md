@@ -1,31 +1,78 @@
 # 🧟 Project Codex: Zombie Waves AI Strategy Engine
+> An Advanced RAG (Retrieval-Augmented Generation) & Fine-Tuning Engine for Zombie Waves Game Strategy.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![CUDA Ready](https://img.shields.io/badge/CUDA-12.x-green.svg)](https://developer.nvidia.com/cuda-toolkit)
+[![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/downloads/)
+[![WSL2-Ubuntu](https://img.shields.io/badge/OS-Ubuntu_24.04_LTS-orange.svg)](https://ubuntu.com/)
+[![GPU-Acceleration](https://img.shields.io/badge/Hardware-NVIDIA_RTX-green.svg)](https://developer.nvidia.com/cuda-zone)
 
-**Project Codex** is a non-commercial, educational research project designed to build a high-fidelity "Expert AI" for the mobile game *Zombie Waves*. By leveraging the official Reddit Data API and local fine-tuning on an NVIDIA-powered workstation, this project explores community-driven game theory and Large Language Model (LLM) fine-tuning.
-
----
-
-## 🚀 Overview
-
-The goal of this project is to ingest unstructured community strategy data (synergies, hero builds, and game exploits) and transform it into a structured knowledge base for a specialized LLM.
-
-### Key Features
-- **Ethical Data Ingestion:** Uses PRAW to collect high-signal strategy threads via the official Reddit API.
-- **Anonymized Processing:** Automated stripping of PII (Usernames/IDs) before local storage.
-- **Compliance-First Design:** Hard-coded rate limiting (2s delays) and automated deletion sync logic.
-- **Local Fine-Tuning:** Optimized for NVIDIA RTX GPUs using the Unsloth/HuggingFace ecosystem.
+**Project Codex** is a non-commercial, educational research project designed to build a high-fidelity "Expert AI" for the mobile game Zombie Waves. By leveraging large-scale community datasets from public research archives and executing local fine-tuning on a dedicated NVIDIA-powered workstation, this project explores the intersection of community-driven game theory and Large Language Model (LLM) optimization.
 
 ---
 
-## 🛠️ Tech Stack & Rig
-- **Hardware:** ASUS Gaming Rig | NVIDIA RTX GPU | 500GB External SSD
-- **Platform:** Windows 11 (WSL2 / Ubuntu 22.04 LTS)
-- **Primary Libraries:** PRAW, python-dotenv, PyTorch (CUDA 12.x)
+## 🎯 Overview
+**ZombieWaves AI-Codex** is an end-to-end data pipeline and AI engine designed to synthesize high-level game meta-strategies. The "Codex" mines thousands of community discussions and expert guides to provide optimized build paths, hero synergies (e.g., MX Hero), and stage-specific tactical advice.
 
----
+The primary objective is to ingest large volumes of unstructured community data—ranging from synergies and hero builds to game exploits—and transform it into a structured, high-signal knowledge base. This refined data serves as the foundation for fine-tuning a specialized LLM, turning "chatter" into actionable strategic intelligence.
+
+
+## 📊 System Architecture & Data Flow
+```mermaid
+graph TD
+    subgraph "1. DATA SOURCE"
+    A[Academic Torrents Archive] --> B[Zstd Compressed Dumps]
+    end
+
+    subgraph "2. EXTRACTION & PRIVACY"
+    B --> C{Custom Python Parser}
+    C -->|ID Blacklist| D[Filtered Stream]
+    C -->|Anonymize| E[PII Removal]
+    end
+
+    subgraph "3. AI TRAINING"
+    D & E --> F[Refined JSONL Codex]
+    F --> G[Llama 3 / Unsloth]
+    G --> H[Expert Strategy Engine]
+    end
+
+    style G fill:#2c3e50,color:#fff,stroke:#3498db
+    style C fill:#e67e22,color:#fff
+```
+
+
+## 🏗️ Architecture & Tech Stack
+This project is built on a high-performance local workstation (ASUS RTX Rig) to ensure data privacy and rapid iteration.
+
+- **Infrastructure:** Ubuntu 24.04 LTS via WSL2.
+- **Data Engine:** Custom extraction pipeline using `zstd` and `grep` to process multi-gigabyte Reddit data dumps (Pushshift/Academic Torrents).
+- **AI/ML:** - **Framework:** PyTorch with CUDA 12.1 hardware acceleration.
+  - **Environment:** Miniconda for isolated dependency management.
+  - **Models:** (Planned) Llama 3 fine-tuned on specialized game datasets.
+
+## 🛠️ Setup & Reproducibility
+Maintaining a stable environment for AI development is a primary focus. I have documented the entire bootstrap process, including hardware bridging and complex dependency resolutions (such as Intel MKL symbol conflicts).
+
+👉 **[View the full Environment Setup Log (setup_log.md)](./docs/setup_log.md)**
+
+
+## 📊 Data Pipeline
+The AI is trained on a refined dataset representing the current "Zombie Waves" meta:
+
+1. **Acquisition & Extraction:** Utilizing the [Arctic Shift Download Tool](https://arctic-shift.photon-reddit.com/download-tool) to perform targeted, high-integrity exports of the r/ZombieWaves subreddit. This bypasses the need for bulk archive filtering, providing a clean NDJSON dataset of community strategies, hero builds (e.g., MX Hero), and stage-specific guides.
+
+2. **Sanitization:** A custom Python pipeline that processes the raw NDJSON to enforce privacy standards. This stage programmatically strips PII (usernames/IDs) and cross-references data against a local ID Blacklist to respect the "Right to Erasure."
+
+3. **Refinement:** Transformation of the sanitized text into specialized Instruction-Response pairs formatted specifically for Llama 3 / Unsloth fine-tuning.
+
+
+## 🚀 Current Status: Data Acquisition
+- [x] Hardware/GPU Integration
+- [x] Stable Linux Environment Setup
+- [x] Python AI Stack Configuration
+- [ ] Data Extraction from Dec 2025 Snapshot (In Progress)
+- [ ] Fine-Tuning Execution
+
+
 
 ## 📂 Project Structure
 
@@ -40,49 +87,21 @@ ZombieWaves-AI-Codex/
 └── README.md           # Documentation & Ethics Statement
 ```
 
----
 
-## 📦 Installation & Deployment
-
-Follow these steps to set up the environment on your local workstation.
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/andrewjee81/ZombieWaves-AI-Codex.git
-cd ZombieWaves-AI-Codex
-```
-
-### 2. Environment Configuration
-Create a .env file in the root directory. Note: This file is ignored by git to protect API secrets.
-```text
-REDDIT_CLIENT_ID=your_id_here
-REDDIT_CLIENT_SECRET=your_secret_here
-REDDIT_USERNAME=your_username
-REDDIT_PASSWORD=your_password
-SSD_DATA_PATH=E:/ZombieWavesProject/data/raw_reddit_data.jsonl
-```
-
-### 3. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Run the Scraper
-```bash
-python scraper_skeleton.py
-```
-
----
 
 ## ⚖️ Ethics & Compliance
 
-This project is strictly for **personal research and educational purposes**. We prioritize platform integrity and user privacy through the following technical safeguards:
+This project is strictly for **personal research and educational purposes**. We prioritize data privacy and respect for the community through the following safeguards:
 
-1. **Official Channels:** Data collection is performed exclusively through the official Reddit Data API using the PRAW library.
-2. **Conservative Rate Limiting:** While the API allows 60 RPM, this script is hard-coded with a 2-second `REQUEST_DELAY` (30 RPM) to ensure zero impact on Reddit server stability.
-3. **Anonymization by Design:** The `anonymize_data()` function strips all PII (usernames, IDs, timestamps) immediately upon ingestion. Only game-mechanic text is retained.
-4. **Data Hygiene:** We retain `source_id` metadata solely to perform "Sync & Purge" checks. If content is deleted on Reddit, it is programmatically removed from our local research dataset to respect user deletion rights.
-5. **Non-Commercial:** This project is not for sale, and no datasets will be redistributed or used for commercial gain.
+1. **Sourcing for Research:** Data is sourced from the Academic Torrents archive (anonymized public dumps). This approach ensures zero impact on Reddit’s live infrastructure and follows established protocols for large-scale data science research.
+
+2. **PII Sanitization:** The project employs a "Signal over Identity" policy. All Personally Identifiable Information (PII)—including usernames, profile IDs, and specific timestamps—is stripped during the extraction phase. Our training datasets contain only game-mechanic text and strategic discussions.
+
+3. **No Redistribution:** We do not redistribute the raw data dumps. The original archives are stored on a private, local drive and are used solely to generate the refined, anonymous knowledge base for the model.
+
+4. **Right to Erasure Compliance:** While the dataset is a point-in-time snapshot, we prioritize the spirit of "User Deletion Rights." If specific content is identified as retracted or sensitive, it is programmatically purged from our training pipeline.
+
+5. **Non-Commercial:** This project is entirely non-commercial. It is a technical showcase of AI fine-tuning and data engineering, not a product for sale or redistribution.
 
 ---
 
@@ -90,4 +109,7 @@ This project is strictly for **personal research and educational purposes**. We 
 
 Distributed under the MIT License. See LICENSE for more information.
 
-Disclaimer: Project Codex is an independent project and is not affiliated with, endorsed by, or in any way officially connected with Fun Formula or Reddit Inc.
+## ⚠️ Disclaimer
+**Project Codex** is an independent, non-commercial research project. It is not affiliated with, endorsed by, or officially connected to **Fun Formula**, **Reddit Inc.**, or any of their subsidiaries. 
+
+All product names, logos, and brands are property of their respective owners. The use of these names and brands does not imply endorsement. This tool is provided "as-is" for educational purposes, and the author assumes no liability for the accuracy of AI-generated strategies or game outcomes.
