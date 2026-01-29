@@ -18,25 +18,35 @@ The primary objective is to ingest large volumes of unstructured community dataâ
 
 ## ðŸ“Š System Architecture & Data Flow
 ```mermaid
-graph TD
-    subgraph "1. DATA SOURCE"
-    A[Academic Torrents Archive] --> B[Zstd Compressed Dumps]
+---
+config:
+  layout: dagre
+  look: classic
+  theme: neutral
+---
+graph LR
+    subgraph Ingestion ["1. Data Ingestion"]
+    A1[posts.jsonl] --- B
+    A2[comments.jsonl] --- B
+    B{Codex Parser}
     end
 
-    subgraph "2. EXTRACTION & PRIVACY"
-    B --> C{Custom Python Parser}
-    C -->|ID Blacklist| D[Filtered Stream]
-    C -->|Anonymize| E[PII Removal]
+    subgraph Sanitization ["2. Sanitization"]
+    B --> C([PII Stripping])
+    B --> D([ID Blacklist])
     end
 
-    subgraph "3. AI TRAINING"
-    D & E --> F[Refined JSONL Codex]
-    F --> G[Llama 3 / Unsloth]
-    G --> H[Expert Strategy Engine]
+    subgraph Training ["3. AI Training"]
+    C & D --> E[Instruction Pairs]
+    E --> F[[Llama 3 / Unsloth]]
     end
 
-    style G fill:#2c3e50,color:#fff,stroke:#3498db
-    style C fill:#e67e22,color:#fff
+    %% Minimalist Styling
+    style B fill:#fff,stroke:#333,stroke-width:2px
+    style F fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+    style Ingestion fill:none,stroke:#ccc,stroke-dasharray: 5 5
+    style Sanitization fill:none,stroke:#ccc,stroke-dasharray: 5 5
+    style Training fill:none,stroke:#ccc,stroke-dasharray: 5 5
 ```
 
 
