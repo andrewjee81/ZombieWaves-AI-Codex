@@ -88,16 +88,14 @@ The AI is trained on a refined dataset representing the current "Zombie Waves" m
 
 ```text
 ZombieWaves-AI-Codex/
-├── data/               # Local symlink to E:/ External SSD (Data Lake)
-├── .env                # API Keys & SSD Paths (Local only, Git-ignored)
-├── .env.example        # Template for environment configuration
-├── .gitignore          # Prevents tracking of PII data and secrets
-├── requirements.txt    # Project dependencies (praw, python-dotenv)
-├── scraper_skeleton.py # Main compliant extraction engine
-└── README.md           # Documentation & Ethics Statement
+├── docs/                # Documentation & Logs
+├── legacy/              # Archived scripts
+├── scripts/             # Helper scripts (sanitizer, formatter)
+├── data/                # Blacklist.txt (No large .jsonl files here!)
+├── .gitignore           # Prevents tracking of PII data and secrets
+├── main.py              <-- THE "BRAIN" (Lives in root)
+└── README.md            # Documentation & Ethics Statement
 ```
-
-
 
 ## ⚖️ Ethics & Compliance
 
