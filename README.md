@@ -89,6 +89,9 @@ The AI is trained on a refined dataset representing the current "Zombie Waves" m
 ```text
 ZombieWaves-AI-Codex/
 ├── docs/                # Documentation & Logs
+├── tests/
+│   ├── test_environment.py   # Validates WSL/C:/D: connections
+│   └── test_sanitizer.py     # Validates PII is actually stripped
 ├── legacy/              # Archived scripts
 ├── scripts/             # Helper scripts (sanitizer, formatter)
 ├── data/                # Blacklist.txt (No large .jsonl files here!)
