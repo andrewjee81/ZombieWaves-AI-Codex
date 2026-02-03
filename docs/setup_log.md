@@ -84,13 +84,13 @@ python -c "import torch; print('GPU Ready:', torch.cuda.is_available())"
 Status: Success! (GPU Ready: True)
 
 ---
-✅ Code Standards & Maintainability
+## ✅ Code Standards & Maintainability
 
 - **Header Docstrings:** Implemented across all modules to provide clear intent, authorship, and compliance context.
 - **Naming Conventions:** Maintained American English for executable code (Standard Practice) and British English for prose/comments (Regional Context).
 - **Automation:** Serialised the workflow within `main.py` for reproducible research.
 
-✅ Verification & Validation
+## ✅ Verification & Validation
 
 To ensure environment integrity across the WSL2/Windows bridge, the following tests were performed:
 
@@ -101,17 +101,17 @@ To ensure environment integrity across the WSL2/Windows bridge, the following te
 | **Blacklist Logic** | Manual ID insertion | Success: Target IDs correctly skipped during ingestion. |
 | **Empty Content Filter** | Content validation check | Success: 77 noise entries (deleted/empty) removed. |
 
-🧪 Automated Testing
+## 🧪 Automated Testing
 
 - **Script:** `tests/test_sanitiser.py`
 - **Purpose:** Validates that the "Signal over Identity" policy is enforced and that [deleted]/[removed] noise is successfully purged.
 - **Status:** PASS
 
-✅ Data Encoding & Integrity
+## ✅ Data Encoding & Integrity
 
 During the pairing phase, JSON output was validated for Unicode compliance. While standard ASCII ensures cross-platform stability, ensure_ascii=False was considered to maintain the readability of regional characters and punctuation marks (e.g., curly apostrophes and currency symbols).
 
-✅ Dataset Finalisation
+## ✅ Dataset Finalisation
 
 - **Date:** February 2026
 - **Source:** Arctic Shift (Reddit Snapshot + Live 2026 Delta)
@@ -120,7 +120,7 @@ During the pairing phase, JSON output was validated for Unicode compliance. Whil
 
 **Observation:** The ingestion pipeline successfully linked over 17,000 community interactions. The volume of data is sufficient for a multi-epoch fine-tuning run without significant risk of over-fitting on a narrow subset of advice.
 
-🔍 Data Science Refinement & De-duplication
+## 🔍 Data Science Refinement & De-duplication
 
 To mitigate the risk of the model over-fitting on repetitive community interactions (e.g., bot responses or generic acknowledgements), a custom refinement pass was implemented.
 
@@ -132,7 +132,7 @@ To mitigate the risk of the model over-fitting on repetitive community interacti
 
 - **Integrity Check:** Confirmed that the final dataset maintains the February 2026 "Meta" while increasing the overall signal-to-noise ratio.
 
-✅ Integrated Pipeline
+## ✅ Integrated Pipeline
 
 - **Automation:** The entire workflow is now serialised within main.py.
 
