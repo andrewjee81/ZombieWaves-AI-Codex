@@ -99,3 +99,11 @@ To ensure environment integrity across the WSL2/Windows bridge, the following te
 ## ✅ Data Encoding & Integrity
 
 During the pairing phase, JSON output was validated for Unicode compliance. While standard ASCII ensures cross-platform stability, ensure_ascii=False was considered to maintain the readability of regional characters and punctuation marks (e.g., curly apostrophes and currency symbols).
+
+## ✅ Dataset Finalisation
+- **Date:** February 2026
+- **Source:** Arctic Shift (Reddit Snapshot + Live 2026 Delta)
+- **Total Instruction-Response Pairs:** 17,014
+- **Encoding:** UTF-8 (Human-readable, `ensure_ascii=False`)
+
+**Observation:** The ingestion pipeline successfully linked over 17,000 community interactions. The volume of data is sufficient for a multi-epoch fine-tuning run without significant risk of over-fitting on a narrow subset of advice.
