@@ -79,8 +79,8 @@ The AI is trained on a refined dataset representing the current "Zombie Waves" m
 - [x] Hardware/GPU Integration
 - [x] Stable Linux Environment Setup
 - [x] Python AI Stack Configuration
-- [ ] Data Extraction from Dec 2025 Snapshot (In Progress)
-- [ ] Fine-Tuning Execution
+- [x] Data Extraction from Dec 2025 Snapshot
+- [ ] Fine-Tuning Execution (In Progress)
 
 
 
@@ -90,13 +90,11 @@ The AI is trained on a refined dataset representing the current "Zombie Waves" m
 ZombieWaves-AI-Codex/
 ├── docs/ # Documentation & Logs
 ├── tests/
-│ ├── test_environment.py # Validates WSL/C:/D: connections
-│ └── test_sanitizer.py # Validates PII is actually stripped
 ├── legacy/ # Archived scripts
-├── scripts/ # Helper scripts (sanitiser, formatter)
-├── data/ # Blacklist.txt (No large .jsonl files here!)
+├── scripts/ # Helper scripts
+├── data/ # Blacklist.txt
 ├── .gitignore # Prevents tracking of PII data and secrets
-├── main.py <-- THE "BRAIN" (Lives in root)
+├── main.py <-- THE "BRAIN" 
 └── README.md # Documentation & Ethics Statement
 ```
 
