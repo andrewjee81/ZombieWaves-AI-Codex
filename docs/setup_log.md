@@ -3,7 +3,7 @@
 **Target System:** ASUS Gaming Rig (RTX GPU)  
 **Environment:** WSL2 / Ubuntu 24.04 LTS
 
-## 1. System Initialization (Windows Side)
+## 1. System Initialisation (Windows Side)
 The first step is to enable the Windows Subsystem for Linux (WSL2) and ensure the hardware drivers are bridged.
 
 ```powershell
@@ -32,7 +32,7 @@ nvidia-smi
 Confirmed: GPU visible and communicating with Ubuntu.
 
 ## 4. Python Environment Setup
-We utilize Miniconda to create an isolated environment for the AI model.
+We utilise Miniconda to create an isolated environment for the AI model.
 
 ```Bash
 
@@ -82,3 +82,16 @@ python -c "import torch; print('GPU Ready:', torch.cuda.is_available())"
 ```
 
 Status: Success! (GPU Ready: True)
+
+---
+
+## ✅ Verification & Validation
+
+To ensure environment integrity across the WSL2/Windows bridge, the following tests were performed:
+
+| Test Case | Method | Result |
+| :--- | :--- | :--- |
+| **Cross-Drive Access** | `ls /mnt/d/Project\ Codex/` | Success: External D: Drive mounted and readable. |
+| **PII Sanitisation** | `grep` validation on output | Success: 0 instances of `"author":` found in cleaned files. |
+| **Blacklist Logic** | Manual ID insertion | Success: Target IDs correctly skipped during ingestion. |
+| **Empty Content Filter** | Content validation check | Success: 77 noise entries (deleted/empty) removed. |
