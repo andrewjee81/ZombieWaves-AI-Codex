@@ -132,6 +132,14 @@ To mitigate the risk of the model over-fitting on repetitive community interacti
 
 - **Integrity Check:** Confirmed that the final dataset maintains the February 2026 "Meta" while increasing the overall signal-to-noise ratio.
 
+## ✅ Final Dataset Refinement
+- **Final Count:** 16,069 verified pairs.
+- **De-duplication Method:** Fingerprint hashing of (Instruction, Response) tuples.
+- **Quality Threshold:** Minimum 4-word response length enforced.
+- **Human Readability:** `ensure_ascii=False` applied to preserve regional characters and punctuation.
+
+**Conclusion:** The dataset is now optimised for Supervised Fine-Tuning (SFT). The high volume of unique strategic interactions provides a robust foundation for the training phase.
+
 ## ✅ Integrated Pipeline
 
 - **Automation:** The entire workflow is now serialised within main.py.
