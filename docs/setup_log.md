@@ -95,3 +95,7 @@ To ensure environment integrity across the WSL2/Windows bridge, the following te
 | **PII Sanitisation** | `grep` validation on output | Success: 0 instances of `"author":` found in cleaned files. |
 | **Blacklist Logic** | Manual ID insertion | Success: Target IDs correctly skipped during ingestion. |
 | **Empty Content Filter** | Content validation check | Success: 77 noise entries (deleted/empty) removed. |
+
+## ✅ Data Encoding & Integrity
+
+During the pairing phase, JSON output was validated for Unicode compliance. While standard ASCII ensures cross-platform stability, ensure_ascii=False was considered to maintain the readability of regional characters and punctuation marks (e.g., curly apostrophes and currency symbols).
