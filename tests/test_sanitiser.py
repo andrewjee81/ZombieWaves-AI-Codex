@@ -1,6 +1,6 @@
 import sys
 import os
-
+# This line allows the test to "see" your scripts folder
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from scripts.sanitiser import sanitize_jsonl
