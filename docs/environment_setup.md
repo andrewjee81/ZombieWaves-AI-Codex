@@ -51,15 +51,12 @@ To suppress version warnings and prevent the broken compiler from re-triggering,
 ## 🛠️ The "Recovery One-Liner"
 If this environment ever breaks, the sequence to restore it is:
 
-- **System Prep:** `sudo apt update && sudo apt install build-essential -y`
-
-- **PyTorch:** Install PyTorch Nightly via the index URL above.
-
-- **Unsloth:** Install `unsloth[base]` and `unsloth_zoo[base]` from GitHub.
-
-- Patch: Re-apply the `rl.py` dummy file patch.
-
-- Flags: Export the `SKIP` variables.
+1. **System Prep:** `sudo apt update && sudo apt install build-essential -y`
+2. **PyTorch:** Install PyTorch Nightly via the index URL.
+3. **Unsloth:** Install `unsloth[base]` and `unsloth_zoo[base]` from GitHub.
+4. **TRL Fix:** `pip install trl==0.12.1 --no-deps`  <-- IMPORTANT
+5. **Patch:** Re-apply the `rl.py` dummy file patch.
+6. **Flags:** Export the `SKIP` variables.
 
 ## ⚠️ The Golden Rules for RTX 3050 (4GB)
 Context: Training a 3B model on 4GB VRAM is an "extreme" configuration. The following constraints must be maintained to prevent immediate `OOM` (Out of Memory) or `Triton` crashes.
