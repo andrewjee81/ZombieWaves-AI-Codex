@@ -10,7 +10,7 @@ This document outlines the technical strategy for fine-tuning a Large Language M
 ## ✅ Hugging Face Cloud Integration
 To ensure data redundancy and provide a professional "Source of Truth" for the portfolio, the refined dataset has been mirrored to the Hugging Face Hub.
 
-- **Repository:** `[Your-Username]/zombiewaves-strategy-codex`
+- **Repository:** `andrewjee/zombiewaves-strategy-codex`
 - **Visibility:** Private (Version Control)
 - **Dataset Size:** 16,069 high-signal pairs
 - **Format:** JSONL (Instruction-Response)
@@ -55,13 +55,13 @@ To prevent "Out of Memory" (OOM) errors on the RTX 3050, the following constrain
 ```Markdown
 | Parameter           | Value                         | Logic                                             |
 | :------------------ | :---------------------------- | :------------------------------------------------ |
-| **Model**           | Llama-3.2-3B-Instruct-bnb-4bit| Optimised 4-bit base for 4GB VRAM.                |
-| **Max Seq Length**  | 2048                          | Balanced context window for strategy guides.      |
-| **Rank (r)**        | 16                            | Learning capacity vs Memory tradeoff.             |
-| **Batch Size**      | 1                             | Minimum VRAM overhead per step.                   |
-| **Grad Accumulation**| 4                             | Simulates a larger batch size for stability.      |
-| **Epochs**          | 1                             | Prevents over-fitting on 16k samples.             |
-| **Grad Checkpoint** | True (Unsloth)                | Recomputes activations to save VRAM.              |
+| Model               | Llama-3.2-3B-Instruct-bnb-4bit| Optimised 4-bit base for 4GB VRAM.                |
+| Max Seq Length      | 2048                          | Balanced context window for strategy guides.      |
+| Rank (r)            | 16                            | Learning capacity vs Memory tradeoff.             |
+| Batch Size          | 1                             | Minimum VRAM overhead per step.                   |
+| Grad Accumulation   | 4                             | Simulates a larger batch size for stability.      |
+| Epochs              | 1                             | Prevents over-fitting on 16k samples.             |
+| Grad Checkpoint     | True (Unsloth)                | Recomputes activations to save VRAM.              |
 ```
 
 🧪 Evaluation Metrics
