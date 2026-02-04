@@ -1,8 +1,8 @@
 ## 📝 Technical Post-Mortem: AI Training Environment Setup
-**Project:** ZombieWaves-AI-Codex
-**Hardware:** NVIDIA RTX 3050 (4GB VRAM)
-**Date:** February 2026
-**Status:** 🚀 ENGINE READY
+**Project:** ZombieWaves-AI-Codex  
+**Hardware:** NVIDIA RTX 3050 (4GB VRAM)  
+**Date:** February 2026  
+**Status:** 🚀 ENGINE READY  
 
 ## 1. The Core Conflict
 The primary issue was a three-way version mismatch between the stable release of PyTorch (2.5.1), the new Unsloth 2026 update, and the hardware acceleration library `torchao`.
