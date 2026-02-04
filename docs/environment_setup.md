@@ -48,6 +48,12 @@ To suppress version warnings and prevent the broken compiler from re-triggering,
 
 - `UNSLOTH_SKIP_COMPILER=1`
 
+## 6. The TRL Entropy Bug
+- **Error:** `TypeError: 'function' object is not subscriptable` during `trainer.train()`.
+- **Cause:** `trl` version 0.13.0+ introduced a mandatory entropy calculation that is incompatible with Unsloth’s optimized "Fast Forward" logits.
+- **Fix:** Force-downgraded `trl` to version 0.12.1.
+- **Command:** `pip install trl==0.12.1 --no-deps`
+
 ## 🛠️ The "Recovery One-Liner"
 If this environment ever breaks, the sequence to restore it is:
 
