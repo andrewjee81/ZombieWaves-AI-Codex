@@ -52,15 +52,15 @@ pip install --no-deps "xformers<0.0.29" "trl<0.9.0" peft accelerate bitsandbytes
 ## 🚀 Training Hyperparameters (Low-VRAM Profile)
 To prevent "Out of Memory" (OOM) errors on the RTX 3050, the following constraints are applied:
 
-```markdown
+```Markdown
 | Parameter           | Value                         | Logic                                             |
 | :------------------ | :---------------------------- | :------------------------------------------------ |
-| **Model** | Llama-3.2-3B-Instruct-bnb-4bit| Optimised 4-bit base for 4GB VRAM.                |
-| **Max Seq Length** | 2048                          | Balanced context window for strategy guides.      |
-| **Rank (r)** | 16                            | Learning capacity vs Memory tradeoff.             |
-| **Batch Size** | 1                             | Minimum VRAM overhead per step.                   |
+| **Model**           | Llama-3.2-3B-Instruct-bnb-4bit| Optimised 4-bit base for 4GB VRAM.                |
+| **Max Seq Length**  | 2048                          | Balanced context window for strategy guides.      |
+| **Rank (r)**        | 16                            | Learning capacity vs Memory tradeoff.             |
+| **Batch Size**      | 1                             | Minimum VRAM overhead per step.                   |
 | **Grad Accumulation**| 4                             | Simulates a larger batch size for stability.      |
-| **Epochs** | 1                             | Prevents over-fitting on 16k samples.             |
+| **Epochs**          | 1                             | Prevents over-fitting on 16k samples.             |
 | **Grad Checkpoint** | True (Unsloth)                | Recomputes activations to save VRAM.              |
 ```
 
