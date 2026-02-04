@@ -85,3 +85,18 @@ Context: Training a 3B model on 4GB VRAM is an "extreme" configuration. The foll
     export UNSLOTH_SKIP_TORCHVISION_CHECK=1
     export UNSLOTH_SKIP_COMPILER=1
 ```
+
+## 🛠️ Troubleshooting Log
+Error: RuntimeError: Failed to find C compiler
+Date: 2026-02-04
+
+Cause: Triton (used by Unsloth) requires a C compiler to build GPU kernels on the fly. Fresh WSL/Ubuntu installs often lack gcc.
+
+Fix: Installed the build-essential package.
+
+```Bash
+
+sudo apt update && sudo apt install build-essential -y
+```
+
+Status: Resolved. Training successfully initialized.
