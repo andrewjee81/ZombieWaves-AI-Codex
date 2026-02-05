@@ -9,3 +9,5 @@ __pycache__/
 
 # Ignore Conda envs if they are in this folder
 env/
+unsloth_compiled_cache/
+zombie_codex_outputs/

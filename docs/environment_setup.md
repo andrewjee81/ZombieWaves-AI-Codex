@@ -2,7 +2,7 @@
 **Project:** ZombieWaves-AI-Codex  
 **Hardware:** NVIDIA RTX 3050 (4GB VRAM)  
 **Date:** February 2026  
-**Status:** 🚀 ENGINE READY  
+**Status:** ✅ SUCCESSFUL VALIDATION RUN
 
 ## 1. The Core Conflict
 The primary issue was a three-way version mismatch between the stable release of PyTorch (2.5.1), the new Unsloth 2026 update, and the hardware acceleration library `torchao`.
@@ -87,6 +87,10 @@ Context: Training a 3B model on 4GB VRAM is an "extreme" configuration. The foll
     export UNSLOTH_SKIP_TORCHVISION_CHECK=1
     export UNSLOTH_SKIP_COMPILER=1
 ```
+
+4. The 3.8GB Ceiling
+
+   Monitor nvidia-smi. If VRAM spikes, reduce max_seq_length to 1024.
 
 ## 🛠️ Troubleshooting Log
 Error: RuntimeError: Failed to find C compiler
