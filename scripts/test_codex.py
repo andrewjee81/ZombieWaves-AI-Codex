@@ -16,12 +16,30 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 FastLanguageModel.for_inference(model)
 
 # 2. Define the test case
-instruction = "Which weapon should be paired with Modified Xyclon (MX) between the Arbalest, Voltgun, and Pulse Laser Canon, and what are the essential traits required to trigger his infinite ammo state?"
-prompt = f"### Instruction:\n{instruction}\n\n### Response:\n"
+# Updated Prompt with a System Persona
+# System prompt to stop the "Penguin is a Hero" hallucination
+system_prompt = """You are the ZombieWaves Strategy Codex. 
+1. Always distinguish between Heroes (like MX) and Robots (like Penguin). 
+2. Use specific trait names like 'Miniclip' and 'Entrenched'. 
+3. Focus on 'No-Reload' synergies."""
+
+instruction = "Which weapon should be paired with MX—Arbalest, Voltgun, or Pulse Laser Canon—and what is the best Robot to accompany them?"
+
+# Build the Alpaca-style prompt with System instruction
+prompt = f"### System:\n{system_prompt}\n\n### Instruction:\n{instruction}\n\n### Response:\n"
+
 
 # 3. Generate the response
 inputs = tokenizer([prompt], return_tensors = "pt").to("cuda")
-outputs = model.generate(**inputs, max_new_tokens = 128, use_cache = True)
+outputs = model.generate(
+    **inputs, 
+    max_new_tokens = 128, 
+    use_cache = True,
+    temperature = 0.7,         # Adds a bit of "creativity" so it doesn't pick the same word
+    top_p = 0.9,               # Nucleus sampling: filters out the "junk" low-probability words
+    repetition_penalty = 1.2,  # THE CURE: Physically punishes the model for repeating words
+    do_sample = True           # Enables the temperature/top_p settings
+)
 response = tokenizer.batch_decode(outputs)
 
 # Clean up the output to get only the response text
