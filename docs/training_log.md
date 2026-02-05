@@ -105,7 +105,7 @@ ultimately depends on what kind of playstyle ur looking for tho?
 if your trying to clear fast and don’t mind having less firepower in later stages because ur killing zombies so quick lol, then arbalest is still awesome and will serve
 
 ---
-🛠️ Issue Log: Identity Confusion
+🛠️ Issue Log: Identity Confusion  
 Date: 2026-02-05
 
 Status: ✅ Resolved (Inference Side)
