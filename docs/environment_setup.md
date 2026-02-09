@@ -106,3 +106,28 @@ sudo apt update && sudo apt install build-essential -y
 ```
 
 Status: Resolved. Training successfully initialized.
+
+---
+## 🗃️ Data Sources & Scope
+
+Initially, this project was designed to leverage public Reddit data. However, to build a truly comprehensive **Zombie Waves AI Codex**, the scope has been expanded to include high-signal community knowledge from multiple platforms:
+
+* **Reddit (Public Data):** General community discussions and high-level strategy threads.
+* **Discord (Community Tips):** Granular, real-time advice from the "general-tips-n-tricks" channel.
+* **YouTube (Video Transcripts):** Expert video guides converted to text via Python-based transcript extraction.
+
+By combining these sources, the model gains a balanced perspective of both long-form theory (Reddit) and tactical, "on-the-ground" advice (Discord/YouTube).
+
+## 🎓 Learning Resources & Credits
+
+This project follows the modern 'Local LLM Fine-Tuning' pipeline. I am by no means an expert; like many of you, I am learning as I go. If you are new to AI training, I highly recommend the following resources that were instrumental in helping me understand and implement this project:  
+
+### 📺 Key Video Tutorials
+* **[How to Fine-Tune Llama 3 Locally](https://www.youtube.com/watch?v=pxhkDaKzBaY)** - A comprehensive guide on the entire pipeline from data to local deployment.
+* **[Discord Data for AI](https://www.youtube.com/watch?v=Oms0D-A88JY)** - Understanding why data cleaning is the most critical step in the process.
+
+### 🛠️ Core Technologies Used
+* **[Unsloth AI](https://github.com/unslothai/unsloth):** Used for 2x faster, 80% less memory fine-tuning on consumer GPUs (like the RTX 3050).
+* **[DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter):** The gold standard for extracting raw community knowledge.
+* **[Clean-Discord (Forked)](https://github.com/andrewjee81/clean-discord):** Modified to support modern 19-digit Discord IDs and nested data structures found in gaming communities.
+* **[Scraping YouTube with OpenAI (Python & YouTube Transcript API)](https://www.youtube.com/watch?v=2TL3DgIMY1g):** This video by Eli the Computer Guy provides a crystal-clear walkthrough of how to use Python to grab transcripts and feed them into an AI.
