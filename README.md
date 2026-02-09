@@ -74,15 +74,21 @@ The AI is trained on a refined dataset representing the current "Zombie Waves" m
 
 3. **Refinement:** Transformation of the sanitised text into specialised Instruction-Response pairs formatted specifically for Llama 3 / Unsloth fine-tuning.
 
+## 🚀 Current Status: Data Acquisition & Training
 
-## 🚀 Current Status: Data Acquisition
-- [x] Hardware/GPU Integration
-- [x] Stable Linux Environment Setup
-- [x] Python AI Stack Configuration
-- [x] Data Extraction from Dec 2025 Snapshot
-- [ ] Fine-Tuning Execution (In Progress)
+### ⚙️ System & Stack
+- [x] **Hardware/GPU Integration:** RTX 3050 configured with proper CUDA drivers.
+- [x] **Stable Linux Environment Setup:** WSL2/Ubuntu environment verified.
+- [x] **Python AI Stack Configuration:** Unsloth, PyTorch, and dependencies installed.
 
+### 📊 Data Pipeline
+- [x] **Data Extraction:** Successfully extracted from 23-05-2023 - 03-02-2026 Snapshot.
+- [x] **Data Cleaning:** Custom Regex & Nested List fixes applied to `clean-discord`.
+- [ ] **YouTube Knowledge (Phase 2):** Transcript extraction and formatting.
 
+### 🧪 Model Development
+- 🔄 **Fine-Tuning Execution:** Currently in progress using Unsloth (LoRA adapters).
+- [ ] **Model Evaluation:** Testing against known Zombie Waves strategy benchmarks.
 
 ## 📂 Project Structure
 
