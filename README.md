@@ -5,6 +5,7 @@
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/downloads/)
 [![WSL2-Ubuntu](https://img.shields.io/badge/OS-Ubuntu_24.04_LTS-orange.svg)](https://ubuntu.com/)
 [![GPU-Acceleration](https://img.shields.io/badge/Hardware-NVIDIA_RTX-green.svg)](https://developer.nvidia.com/cuda-zone)
+![Status: Work in Progress](https://img.shields.io/badge/status-wip-orange)
 
 **Project Codex** is a non-commercial, educational research project designed to build a high-fidelity "Expert AI" for the mobile game Zombie Waves. By leveraging large-scale community datasets from public research archives and executing local fine-tuning on a dedicated NVIDIA-powered workstation, this project explores the intersection of community-driven game theory and Large Language Model (LLM) optimisation.
 
