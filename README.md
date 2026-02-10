@@ -118,6 +118,9 @@ The Zombie Waves AI Codex is trained on a high-signal dataset engineered for con
    - **The ChatML Pivot:** Unlike traditional static instruction pairs, all data is now transformed into ChatML format (System, User, Assistant).
    - **Contextual Pairing:** Discord message blocks are logically grouped to maintain conversational flow, while Reddit threads are karma-weighted to pair the most accurate expert response with the user's query.
    - **System Guardrails:** Every entry is anchored with a project-specific System Prompt to maintain persona integrity and domain focus.
+  
+4. Hardware-Aware Optimisation
+   The pipeline incorporates specific memory-efficiency guardrails to facilitate training on consumer-grade GPUs (4GB VRAM). See [environment_setup.md](.docs/environment_setup.md) for full hardware configurations.
 
 ## 🚀 Current Status: Data Acquisition & Training
 
