@@ -132,10 +132,15 @@ This project follows the modern 'Local LLM Fine-Tuning' pipeline. I am by no mea
 
 ### 📺 Key Video Tutorials
 * **[How to Fine-Tune Llama 3 Locally](https://www.youtube.com/watch?v=pxhkDaKzBaY)** - A comprehensive guide on the entire pipeline from data to local deployment.
+* **[Unsloth: Formatting Datasets for Chat](https://www.youtube.com/watch?v=Lt7KrFMcCis)** - This was the catalyst for moving from Alpaca to ChatML. It explains how 'Supervised Fine-Tuning' (SFT) works better when the data follows a conversational role-based structure.
 * **[Discord Data for AI](https://www.youtube.com/watch?v=Oms0D-A88JY)** - Understanding why data cleaning is the most critical step in the process.
 
+### 📖 Essential Technical Reading
+* **[The Case for ChatML (OpenAI Standard)](https://github.com/openai/openai-python/blob/main/chatml.md):** I transitioned from the Alpaca instruction format to **ChatML** after researching how modern LLMs handle roles (`system`, `user`, `assistant`). This documentation explains the security and clarity benefits of separating instructions from content.
+* **[Unsloth Chat Templates Documentation](https://unsloth.ai/docs/basics/chat-templates):** This resource was instrumental in aligning our `master_codex_data.jsonl` with the native Llama-3-Instruct format to ensure the model maintains its 'Expert Strategy Assistant' persona.
+
 ### 🛠️ Core Technologies Used
-* **[Unsloth AI](https://github.com/unslothai/unsloth):** Used for 2x faster, 80% less memory fine-tuning on consumer GPUs (like the RTX 3050).
+* **[Unsloth AI](https://github.com/unslothai/unsloth):** Used for 2x faster, 80% less memory fine-tuning on consumer GPUs.
 * **[DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter):** The gold standard for extracting raw community knowledge.
-* **[Clean-Discord (Forked)](https://github.com/andrewjee81/clean-discord):** Modified to support modern 19-digit Discord IDs and nested data structures found in gaming communities.
-* **[Scraping YouTube with OpenAI (Python & YouTube Transcript API)](https://www.youtube.com/watch?v=2TL3DgIMY1g):** This video by Eli the Computer Guy provides a crystal-clear walkthrough of how to use Python to grab transcripts and feed them into an AI.
+* **[Clean-Discord (Forked)](https://github.com/andrewjee81/clean-discord):** Modified to support modern 19-digit Discord IDs and nested structures.
+* **[Scraping YouTube with OpenAI (Eli the Computer Guy)](https://www.youtube.com/watch?v=2TL3DgIMY1g):** Provided the logic for our YouTube Transcript Chunker, converting long-form video audio into structured strategy pairs.
