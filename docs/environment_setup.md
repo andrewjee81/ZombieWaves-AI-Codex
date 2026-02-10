@@ -90,7 +90,15 @@ Context: Training a 3B model on 4GB VRAM is an "extreme" configuration. The foll
 
 4. The 3.8GB Ceiling
 
-   Monitor nvidia-smi. If VRAM spikes, reduce max_seq_length to 1024.
+   Monitor `nvidia-smi`. If VRAM spikes, reduce `max_seq_length` to 1024.
+
+## 🛠️ Hardware-Aware Optimisation (4GB VRAM)
+To support the "Golden Rules" above, the following structural optimisations are baked into the training pipeline to ensure the model stays within the physical limits of the 4GB card:
+
+* **4-bit NormalFloat (NF4) Quantisation:** The model is loaded via `bitsandbytes` to reduce its memory footprint by ~70% while maintaining reasoning capabilities.
+* **Gradient Checkpointing:** Enabled to trade compute speed for memory stability; it re-calculates activations rather than storing them in VRAM.
+* **Sequence Capping:** Training inputs are strictly capped at a `max_seq_length` of 1024 tokens to keep the KV cache manageable.
+* **LoRA Rank Tuning:** Rank ($r$) is set to 8 and Alpha to 16. This provides enough "mental depth" for strategy without bloating the trainable parameter count.
 
 ## 🛠️ Troubleshooting Log
 Error: RuntimeError: Failed to find C compiler
