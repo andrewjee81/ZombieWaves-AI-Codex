@@ -64,6 +64,12 @@ If this environment ever breaks, the sequence to restore it is:
 5. **Patch:** Re-apply the `rl.py` dummy file patch.
 6. **Flags:** Export the `SKIP` variables.
 
+## 👤 User Management & Environment Standards
+To maintain system stability and a "Clean Room" development cycle, all work is performed under a dedicated `codex` system profile. Within this profile, we maintain two distinct virtual environments to isolate dependencies:
+
+* **`codex` Environment:** Used for general development, data cleaning, and running the YouTube/Discord scraping scripts.
+* **`codex-train` Environment:** A high-performance, minimalist environment containing the `Unsloth`, `Torch`, and `Bitsandbytes` stack. This environment is strictly reserved for the "Burn" (Fine-Tuning) to ensure zero VRAM wastage from unnecessary libraries.
+
 ## ⚠️ The Golden Rules for RTX 3050 (4GB)
 Context: Training a 3B model on 4GB VRAM is an "extreme" configuration. The following constraints must be maintained to prevent immediate `OOM` (Out of Memory) or `Triton` crashes.
 
