@@ -17,37 +17,73 @@
 The primary objective is to ingest large volumes of unstructured community data ranging from synergies and hero builds to game exploits—and transform it into a structured, high-signal knowledge base. This refined data serves as the foundation for fine-tuning a specialised LLM, turning "chatter" into actionable strategic intelligence.
 
 
-## 📊 System Architecture & Data Flow
+## 📊 System Architecture & Data Flow (Updated 2026-02-10)
 ```mermaid
----
-config:
-layout: dagre
-look: classic
-theme: neutral
----
-graph LR
-subgraph Ingestion ["1. Data Ingestion"]
-A1[posts.jsonl] --- B
-A2[comments.jsonl] --- B
-B{Codex Parser}
-end
+graph TD
+    %% Source Layer
+    subgraph Sources [Raw Data Sources]
+        D_Raw[Discord JSON<br/>39k Messages]
+        R_Raw[Reddit JSON<br/>Strategy Threads]
+        Y_Raw[YouTube Transcripts<br/>Video Content]
+        G_Raw[In-Game Codex<br/>Official Stats]
+    end
 
-subgraph Sanitisation ["2. Sanitisation"]
-B --> C([PII Stripping])
-B --> D([ID Blacklist])
-end
+    %% Processing Layer
+    subgraph Processing [Cleaning & Refinement]
+        D_Clean[clean-discord.py<br/>Detox & Antispam]
+        R_Refine[refiner.py<br/>Karma-Weighted Filter]
+        Y_Chunk[Chunker Script<br/>Synth & Summarize]
+    end
 
-subgraph Training ["3. AI Training"]
-C & D --> E[Instruction Pairs]
-E --> F[[Llama 3 / Unsloth]]
-end
+    %% Transformation Layer
+    subgraph Transformation [Conversational Alignment]
+        System_Prompt{{System Prompt Guardrail}}
+        ChatML_Conv[ChatML Transformation<br/>Role: System/User/Assistant]
+    end
 
-%% Minimalist Styling
-style B fill:#fff,stroke:#333,stroke-width:2px
-style F fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
-style Ingestion fill:none,stroke:#ccc,stroke-dasharray: 5 5
-style Sanitisation fill:none,stroke:#ccc,stroke-dasharray: 5 5
-style Training fill:none,stroke:#ccc,stroke-dasharray: 5 5
+    %% Data Preparation Layer
+    subgraph Data_Prep [Data Preparation]
+        Master_File[(master_codex_data.jsonl)]
+        Tokenize[Tokenization]
+    end
+
+    %% GPU Optimization Layer
+    subgraph GPU_Optimization [4GB VRAM Rig]
+        Loader{Unsloth Loader}
+        NF4[4-bit NF4 Quant]
+        GRAD[Gradient Checkpointing]
+        RANK[LoRA Rank: 8]
+        MSL[Max Seq Length: 1024]
+    end
+
+    %% Final Output
+    subgraph Result [Final Codex]
+        Final_Weights[[Fine-Tuned Weights]]
+    end
+
+    %% Main Flow Connections
+    D_Raw --> D_Clean
+    R_Raw --> R_Refine
+    Y_Raw --> Y_Chunk
+    G_Raw --> ChatML_Conv
+
+    D_Clean --> ChatML_Conv
+    R_Refine --> ChatML_Conv
+    Y_Chunk --> ChatML_Conv
+
+    System_Prompt --> ChatML_Conv
+    ChatML_Conv --> Master_File
+    Master_File --> Tokenize
+    Tokenize --> Loader
+
+    %% Optimization Connections
+    Loader --> NF4
+    Loader --> GRAD
+    Loader --> RANK
+    Loader --> MSL
+
+    %% Finalizing
+    NF4 & GRAD & RANK & MSL --> Final_Weights
 ```
 
 
@@ -66,14 +102,22 @@ Maintaining a stable environment for AI development is a primary focus. I have d
 👉 **[View the full Environment Setup Log (setup_log.md)](./docs/setup_log.md)**
 
 
-## 📊 Data Pipeline
-The AI is trained on a refined dataset representing the current "Zombie Waves" meta:
+## 📊 Data Pipeline (Updated 2026-02-10)
+The Zombie Waves AI Codex is trained on a high-signal dataset engineered for conversational accuracy and hardware efficiency. The pipeline has evolved from static instructions to a multi-threaded, conversational architecture:
 
-1. **Acquisition & Extraction:** Utilising the [Arctic Shift Download Tool](https://arctic-shift.photon-reddit.com/download-tool) to perform targeted, high-integrity exports of the r/ZombieWaves subreddit. This bypasses the need for bulk archive filtering, providing a clean NDJSON dataset of community strategies, hero builds (e.g., MX Hero), and stage-specific guides.
+1. Acquisition & Extraction (Multi-Source)
+   - **Reddit Intelligence:** Utilising the [https://arctic-shift.photon-reddit.com/download-tool](Arctic Shift Download Tool) for high-integrity exports of strategy-rich threads. This provides a baseline of peer-reviewed builds (e.g., MX Hero and Boreas meta).
+   - **Discord Intelligence:** Targeted exports of the general-tips-n-tricks channels, capturing the "fast-meta" and real-time community troubleshooting.
+   - **In-Game Codex:** (In Progress) Direct extraction of official weapon stats and ability definitions to act as the "Source of Truth."
 
-2. **Sanitisation:** A custom Python pipeline that processes the raw NDJSON to enforce privacy standards. This stage programmatically strips PII (usernames/IDs) and cross-references data against a local ID Blacklist to respect the "Right to Erasure."
+2. Sanitisation & Safety
+   - **Privacy Enforcement:** A custom Python layer programmatically strips PII (usernames/Discord IDs) and cross-references data against a local ID Blacklist to respect the "Right to Erasure."
+   - **Content Filtering:** Integration of detox and antispam protocols during the Discord cleaning phase to ensure the Codex remains professional and focused, filtering out toxic language and bot-command noise.
 
-3. **Refinement:** Transformation of the sanitised text into specialised Instruction-Response pairs formatted specifically for Llama 3 / Unsloth fine-tuning.
+3. Conversational Transformation (ChatML)
+   - **The ChatML Pivot:** Unlike traditional static instruction pairs, all data is now transformed into ChatML format (System, User, Assistant).
+   - **Contextual Pairing:** Discord message blocks are logically grouped to maintain conversational flow, while Reddit threads are karma-weighted to pair the most accurate expert response with the user's query.
+   - **System Guardrails:** Every entry is anchored with a project-specific System Prompt to maintain persona integrity and domain focus.
 
 ## 🚀 Current Status: Data Acquisition & Training
 
