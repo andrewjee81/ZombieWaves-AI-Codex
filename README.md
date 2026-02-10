@@ -106,7 +106,7 @@ Maintaining a stable environment for AI development is a primary focus. I have d
 The Zombie Waves AI Codex is trained on a high-signal dataset engineered for conversational accuracy and hardware efficiency. The pipeline has evolved from static instructions to a multi-threaded, conversational architecture:
 
 1. Acquisition & Extraction (Multi-Source)
-   - **Reddit Intelligence:** Utilising the [https://arctic-shift.photon-reddit.com/download-tool](Arctic Shift Download Tool) for high-integrity exports of strategy-rich threads. This provides a baseline of peer-reviewed builds (e.g., MX Hero and Boreas meta).
+   - **Reddit Intelligence:** Utilising the [Arctic Shift Download Tool](https://arctic-shift.photon-reddit.com/download-tool) for high-integrity exports of strategy-rich threads. This provides a baseline of peer-reviewed builds (e.g., MX Hero and Boreas meta).
    - **Discord Intelligence:** Targeted exports of the general-tips-n-tricks channels, capturing the "fast-meta" and real-time community troubleshooting.
    - **In-Game Codex:** (In Progress) Direct extraction of official weapon stats and ability definitions to act as the "Source of Truth."
 
