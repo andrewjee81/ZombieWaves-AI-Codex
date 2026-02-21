@@ -59,7 +59,7 @@ To prevent "Out of Memory" (OOM) errors on the RTX 3050, the following constrain
 | Max Seq Length      | 2048                          | Balanced context window for strategy guides.      |
 | Rank (r)            | 16                            | Learning capacity vs Memory tradeoff.             |
 | Batch Size          | 1                             | Minimum VRAM overhead per step.                   |
-| Grad Accumulation   | 4                             | Simulates a larger batch size for stability.      |
+| Grad Accumulation   | 8                             | Simulates a larger batch size for stability.      |
 | Epochs              | 1                             | Prevents over-fitting on 16k samples.             |
 | Grad Checkpoint     | True (Unsloth)                | Recomputes activations to save VRAM.              |
 ```

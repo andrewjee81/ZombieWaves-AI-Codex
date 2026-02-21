@@ -1,63 +1,118 @@
-import os
-from datetime import datetime
-from unsloth import FastLanguageModel
-import torch
+"""
+🚀 PROJECT: Zombie Waves AI Codex - Inference & Validation (v2)
+================================================================
+DESCRIPTION:
+This script serves as the primary validation gate for the 
+'Long Burn' fine-tune. It tests the model's ability to recall 
+high-density strategy logic from the master hero data and 
+PDF strategy guides over general community chatter.
 
-# --- CONFIGURATION ---
-model_path = "/mnt/d/Project Codex/ZombieWaves-AI-Codex-Train/final_codex_model"
-log_file_path = "/mnt/c/inetpub/wwwroot/GitHub/ZombieWaves-AI-Codex/docs/training_log.md"
+VALIDATION METRICS:
+1. Technical Precision: Does the model correctly name traits/gear?
+2. Reasoning Alignment: Does it follow the 5x weighted veteran logic?
+3. Persona Integrity: Does it maintain the 'Expert Strategy Assistant' tone?
 
-# 1. Load the model and tokenizer
-model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name = model_path,
-    max_seq_length = 2048,
-    load_in_4bit = True,
-)
-FastLanguageModel.for_inference(model)
-
-# 2. Define the test case
-# Updated Prompt with a System Persona
-# System prompt to stop the "Penguin is a Hero" hallucination
-system_prompt = """You are the ZombieWaves Strategy Codex. 
-1. Always distinguish between Heroes (like MX) and Robots (like Penguin). 
-2. Use specific trait names like 'Miniclip' and 'Entrenched'. 
-3. Focus on 'No-Reload' synergies."""
-
-instruction = "Which weapon should be paired with MX—Arbalest, Voltgun, or Pulse Laser Canon—and what is the best Robot to accompany them?"
-
-# Build the Alpaca-style prompt with System instruction
-prompt = f"### System:\n{system_prompt}\n\n### Instruction:\n{instruction}\n\n### Response:\n"
-
-
-# 3. Generate the response
-inputs = tokenizer([prompt], return_tensors = "pt").to("cuda")
-outputs = model.generate(
-    **inputs, 
-    max_new_tokens = 128, 
-    use_cache = True,
-    temperature = 0.7,         # Adds a bit of "creativity" so it doesn't pick the same word
-    top_p = 0.9,               # Nucleus sampling: filters out the "junk" low-probability words
-    repetition_penalty = 1.2,  # THE CURE: Physically punishes the model for repeating words
-    do_sample = True           # Enables the temperature/top_p settings
-)
-response = tokenizer.batch_decode(outputs)
-
-# Clean up the output to get only the response text
-final_response = response[0].split("### Response:\n")[-1].replace(tokenizer.eos_token, "").strip()
-
-# 4. Log to Markdown
-timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-log_entry = f"""
----
-### 🧪 Inference Test: {timestamp}
-* **Model Version:** {os.path.basename(model_path)}
-* **Instruction:** {instruction}
-* **Response:** > {final_response}
-
+TARGET MODEL: final_codex_model_v2 (Step 1200 / Loss 1.78)
+HARDWARE: NVIDIA RTX 3050 (4GB VRAM)
+================================================================
 """
 
-with open(log_file_path, "a", encoding="utf-8") as f:
-    f.write(log_entry)
+import os
+import torch
+from unsloth import FastLanguageModel
+from datetime import datetime
 
-print(f"✅ Inference complete. Response logged to {log_file_path}")
-print(f"\nModel Output:\n{final_response}")
+# --- CONFIGURATION & VERSIONING ---
+MODEL_PATH = "/mnt/d/Project Codex/ZombieWaves-AI-Codex-Train/final_codex_model_v2"
+LOG_FILE_PATH = "/mnt/c/inetpub/wwwroot/GitHub/ZombieWaves-AI-Codex/docs/training_log.md"
+
+# ================================================================
+# ⚙️ MASTER CONFIGURATION: ZOMBIE WAVES AI CODEX (v2.2)
+# ================================================================
+# This configuration is tuned to suppress "Silver" Reddit noise
+# and prioritize "Gold" PDF strategy logic (Step 1200 / Loss 1.78).
+PROMPT_VERSION = "v2.2 (Exploit-Aware & Anti-Stutter)"
+
+SYSTEM_PROMPT = (
+    "You are the Zombie Waves AI Codex, a technical strategy engine. "
+    "Your objective is to provide high-level synergies including 'Infinite Ammo' exploits and 'Last Shot' procs. "
+    "\n\nCRITICAL CONSTRAINTS:"
+    "\n- NEVER use first-person language (No 'I', 'me', 'my')."
+    "\n- STOP word repetitions (No double names like 'Edge's Edge')."
+    "\n- FOCUS on mechanics: Miniclip, Entrenched, and Reload-based triggers."
+    "\n- If Arbalest is mentioned with MX, prioritize 'Infinite Ammo' loop logic."
+)
+
+# 🧪 OPTIMIZED GENERATION HYPERPARAMETERS
+GEN_CONFIG = {
+    "max_new_tokens": 256,
+    "temperature": 0.35,           # Low temp = High precision
+    "top_p": 0.9,                  # Narrative filtering
+    "repetition_penalty": 1.2,     # Anti-stutter mechanism
+    "do_sample": True,
+    "use_cache": True,
+}
+# ================================================================
+
+# 🎯 TEST CASES
+TEST_QUERIES = [
+    "What is the optimal trait stacking logic for the Frostfall Rocket Launcher?",
+    "How should I build Modified Xyclon (MX) for high-efficiency stage clearing?",
+    "Which robots provide the best synergy for a Voltgun build?",
+    "Explain the 'Veteran' approach to boss tactics in the late-game stages.",
+    "What are the traits to use for Arbalest when paired with MX?"
+]
+
+def run_validation():
+    print(f"📦 Loading Fine-Tuned Codex: {MODEL_PATH}")
+    model, tokenizer = FastLanguageModel.from_pretrained(
+        model_name = MODEL_PATH,
+        max_seq_length = 2048,
+        load_in_4bit = True,
+    )
+    FastLanguageModel.for_inference(model)
+
+    print(f"\n🚀 Starting Validation using Prompt Version: {PROMPT_VERSION}")
+    print("-" * 30)
+
+    for query in TEST_QUERIES:
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": query},
+        ]
+        
+        inputs = tokenizer.apply_chat_template(
+            messages,
+            add_generation_prompt = True,
+            return_tensors = "pt",
+            return_dict = True,
+        ).to("cuda")
+
+        outputs = model.generate(
+            **inputs, 
+            **GEN_CONFIG,
+            pad_token_id = tokenizer.eos_token_id
+        )
+        
+        input_length = inputs["input_ids"].shape[1]
+        response = tokenizer.batch_decode(outputs[:, input_length:], skip_special_tokens=True)[0]
+
+        # Log to Markdown with Metadata
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"""
+---
+### 🧪 Inference Test: {timestamp}
+* **Model:** `{os.path.basename(MODEL_PATH)}`
+* **Prompt Version:** `{PROMPT_VERSION}`
+* **Query:** {query}
+* **Response:** > {response.strip()}
+"""        
+
+        with open(LOG_FILE_PATH, "a", encoding="utf-8") as f:
+            f.write(log_entry)
+        
+        print(f"\n❓ QUERY: {query}")
+        print(f"🤖 CODEX: {response.strip()}")
+
+if __name__ == "__main__":
+    run_validation()

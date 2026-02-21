@@ -1,3 +1,21 @@
+'''
+Module: train_codex.py
+Project: ZombieWaves-AI-Codex
+Description:
+    Processes raw Reddit snapshots to remove PII (Personally Identifiable Information).
+    Filters out 'deleted' or 'removed' content and applies a blacklist of post IDs
+    to respect user 'Right to Erasure' requests.
+Key Objective: Anonymise data while preserving strategic game context.
+
+
+
+4-bit Quantization: Shrinks the model so it occupies roughly 3.5GB of your 4GB.
+
+8-bit Optimizer: Standard optimizers take up a lot of VRAM; the 8-bit version is much "leaner."
+
+Gradient Accumulation: Instead of trying to process 4 examples at once (which would crash your card), it processes 1 example four times and then updates, giving you the quality of a larger batch without the VRAM cost.
+'''
+
 import os
 os.environ["UNSLOTH_SKIP_TORCHVISION_CHECK"] = "1"
 os.environ["UNSLOTH_SKIP_COMPILER"] = "1"
@@ -7,63 +25,57 @@ import torch
 from trl import SFTTrainer
 from transformers import TrainingArguments
 from datasets import load_dataset
+from unsloth.chat_templates import get_chat_template
 
-# 1. Load Model (Optimised for 4GB)
+# 1. Load Model with 4-bit Quantization (Optimised for 4GB 3050)
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name = "unsloth/Llama-3.2-3B-Instruct-bnb-4bit",
     max_seq_length = 2048,
     load_in_4bit = True,
 )
 
-# 2. Add LoRA Adapters (Minimal footprint)
+# 2. Add LoRA Adapters (The codex "Brain" with minimal footprint for 4GB)
 model = FastLanguageModel.get_peft_model(
     model,
-    r = 8, 
-    target_modules = ["q_proj", "k_proj", "v_proj", "o_proj"],
-    lora_alpha = 16,
+    r = 16, # Increased to 16 for better intelligence, still fits in 4GB
+    target_modules = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    lora_alpha = 32,
     lora_dropout = 0,
     bias = "none",
 )
 
 # 3. Load Dataset
-# dataset = load_dataset("andrewjee/zombiewaves-strategy-codex", split = "train")
-dataset = load_dataset("json", data_files="data/zombiewaves_codex_cleaned.jsonl", split="train")
+script_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(script_dir)
+data_path = os.path.join(root_dir, "data", "training_master_v2_weighted.jsonl")
 
-# DEBUG: See what the columns are actually called
-print(f"DEBUG: Your dataset columns are: {dataset.column_names}")
+# Load the dataset
+dataset = load_dataset("json", data_files=data_path, split="train")
 
-def format_prompts(examples):
-    # Determine the correct column names (trying common variations)
-    # This checks for 'instruction' or 'prompt' or 'input'
-    input_col = next((c for c in ["instruction", "prompt", "input", "question"] if c in examples), None)
-    # This checks for 'output' or 'response' or 'completion' or 'answer'
-    output_col = next((c for c in ["output", "response", "completion", "answer", "strategy"] if c in examples), None)
+print(f"✅ Loading data from: {data_path}")
 
-    if not input_col or not output_col:
-        raise ValueError(f"Could not find matching columns. Columns available: {list(examples.keys())}")
+# 4. Standardise ChatML to Llama-3 Template
+tokenizer = get_chat_template(
+    tokenizer,
+    chat_template = "llama-3", # This maps your {"messages": ...} to the model's brain
+    mapping = {"role" : "role", "content" : "content", "user" : "user", "assistant" : "assistant"},
+)
 
-    instructions = examples[input_col]
-    outputs      = examples[output_col]
-    
-    texts = []
-    for instruction, output in zip(instructions, outputs):
-        # Formatting for Llama-3-style instruction following
-        text = f"### Instruction:\n{instruction}\n\n### Response:\n{output}"
-        texts.append(text)
+def formatting_prompts_func(examples):
+    convos = examples["messages"]
+    texts = [tokenizer.apply_chat_template(convo, tokenize = False, add_generation_prompt = False) for convo in convos]
     return { "text" : texts, }
 
-# 4. Apply the mapping
-dataset = dataset.map(format_prompts, batched=True)
+dataset = dataset.map(formatting_prompts_func, batched = True)
 
+# 5. Path Setup
 external_drive_path = "/mnt/d/Project Codex/ZombieWaves-AI-Codex-Train"
-final_model_path = os.path.join(external_drive_path, "final_codex_model")
+final_model_path = os.path.join(external_drive_path, "final_codex_model_v2")
 
-# Ensure the folder exists
-import os
 if not os.path.exists(external_drive_path):
     os.makedirs(external_drive_path)
 
-# 5. The "3050 Stable" Config
+# 6. The "3050 Stable" Config for Low VRAM
 trainer = SFTTrainer(
     model = model,
     tokenizer = tokenizer,
@@ -71,25 +83,30 @@ trainer = SFTTrainer(
     dataset_text_field = "text",
     max_seq_length = 2048,
     args = TrainingArguments(
-        output_dir = external_drive_path, # Saves checkpoints here
+        output_dir = external_drive_path,
         per_device_train_batch_size = 1,
-        gradient_accumulation_steps = 16,
-        warmup_steps = 5,
-        max_steps = 1000, # Increased for a "Full Burn"
+        gradient_accumulation_steps = 8, 
+        warmup_steps = 10,       # Slightly more warmup for a longer run
+        max_steps = 1200,        # The "Full Burn" for 19k examples
         learning_rate = 2e-4,
         fp16 = not torch.cuda.is_bf16_supported(),
         bf16 = torch.cuda.is_bf16_supported(),
         logging_steps = 1,
-        optim = "adamw_8bit",
+        optim = "adamw_8bit", 
         weight_decay = 0.01,
-        save_total_limit = 3, # Keep only the 3 latest checkpoints to save HDD space
+        save_steps = 300,        # Save every 300 steps as a safety net
+        save_total_limit = 2,    # Keeps only the 2 most recent saves (saves disk space)
     ),
 )
 
-print("\n🚀 ENGINE READY. Starting ZombieWaves-AI-Codex Training...")
+print("\n🚀 ENGINE READY. Training ZombieWaves-AI-Codex with Refined Logic...")
 trainer.train()
 
-# This saves a clean version without optimizer states (smaller file size)
+print(f"✅ Training Complete. Saving Master Codex...")
 model.save_pretrained(final_model_path)
 tokenizer.save_pretrained(final_model_path)
-print(f"✅ Training Complete. Final model saved to: {final_model_path}")
+
+# Optional: Save as GGUF for mobile/local app use later?
+# model.save_pretrained_gguf(final_model_path, tokenizer, quantization_method = "q4_k_m")
+
+print(f"✨ Master Codex v2 ready at: {final_model_path}")

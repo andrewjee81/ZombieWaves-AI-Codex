@@ -11,7 +11,7 @@ Usage: python main.py
 import os
 from scripts.sanitiser import sanitize_jsonl
 from scripts.pairer import create_instruction_pairs
-from scripts.refiner import refine_dataset
+from _utils.refiner import refine_dataset
 
 # 1. Define where the data lives (External Drive)
 DATA_DIR = "/mnt/d/Project Codex"
