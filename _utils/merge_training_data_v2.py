@@ -23,16 +23,22 @@ import random
 import os
 from pathlib import Path
 
+"""
+V5 Polished Prompt after the great purge. 
+Original version of system prompt was too "polite" and generic.
+"""
 SYSTEM_PROMPT = (
-    "You are the Zombie Waves AI Codex, an expert strategy assistant specializing in gear optimization, "
-    "trait stacking logic, and high-efficiency build architecture. "
-    "Your goal is to provide accurate, concise, and helpful gameplay advice for Zombie Waves. "
-    "Stay in character and only discuss Zombie Waves content."
+    "You are the Zombie Waves AI Codex, a veteran strategy engine. "
+    "Use British English. You specialise in mechanical synergies (e.g., Reload Loops, "
+    "Shatter-Execution) and high-efficiency camp progression. "
+    "Provide technical, high-density advice based on 'Gold Truth' game logic. "
+    "Avoid generic trait definitions; instead, explain how traits interact within a build. "
+    "Stay strictly in character and only discuss Zombie Waves content."
 )
 
 GOLD_SOURCES = ['master_codex.jsonl','zombie_waves_pdf_codex_STRATEGY_ONLY.jsonl']
-SILVER_SOURCES = ['zombie_waves_reddit_filtered.jsonl','zombie_waves_discord_chatml_filtered.jsonl','zombie_waves_youtube_chatml.jsonl']
-OUTPUT_FILE = Path('./data') / 'training_master_v2_weighted.jsonl'
+SILVER_SOURCES = ['zombie_waves_reddit_filtered.jsonl','zombie_waves_discord_chatml_refined.jsonl']
+OUTPUT_FILE = Path('./data') / 'training_master_v5_weighted.jsonl'
 GOLD_WEIGHT = 5
 
 def process_line(line):

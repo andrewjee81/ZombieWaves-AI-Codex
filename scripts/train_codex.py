@@ -47,7 +47,7 @@ model = FastLanguageModel.get_peft_model(
 # 3. Load Dataset
 script_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(script_dir)
-data_path = os.path.join(root_dir, "data", "training_master_v2_weighted.jsonl")
+data_path = os.path.join(root_dir, "data", "training_master_v5_weighted.jsonl")
 
 # Load the dataset
 dataset = load_dataset("json", data_files=data_path, split="train")
@@ -70,7 +70,7 @@ dataset = dataset.map(formatting_prompts_func, batched = True)
 
 # 5. Path Setup
 external_drive_path = "/mnt/d/Project Codex/ZombieWaves-AI-Codex-Train"
-final_model_path = os.path.join(external_drive_path, "final_codex_model_v2")
+final_model_path = os.path.join(external_drive_path, "final_codex_model_v5")
 
 if not os.path.exists(external_drive_path):
     os.makedirs(external_drive_path)
@@ -81,14 +81,14 @@ trainer = SFTTrainer(
     tokenizer = tokenizer,
     train_dataset = dataset,
     dataset_text_field = "text",
-    max_seq_length = 2048,
+    max_seq_length = 512,
     args = TrainingArguments(
         output_dir = external_drive_path,
         per_device_train_batch_size = 1,
         gradient_accumulation_steps = 8, 
         warmup_steps = 10,       # Slightly more warmup for a longer run
-        max_steps = 1200,        # The "Full Burn" for 19k examples
-        learning_rate = 2e-4,
+        max_steps = 4000,        # The "Full Burn" for 19k examples
+        learning_rate = 2e-5,
         fp16 = not torch.cuda.is_bf16_supported(),
         bf16 = torch.cuda.is_bf16_supported(),
         logging_steps = 1,
@@ -99,7 +99,7 @@ trainer = SFTTrainer(
     ),
 )
 
-print("\n🚀 ENGINE READY. Training ZombieWaves-AI-Codex with Refined Logic...")
+print("\n🚀 ENGINE READY. Training ZombieWaves-AI-Codex V5 with weighted codex...")
 trainer.train()
 
 print(f"✅ Training Complete. Saving Master Codex...")

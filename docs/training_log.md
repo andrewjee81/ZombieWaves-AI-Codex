@@ -513,3 +513,37 @@ Use these settings to ensure the model maintains this "Expert" persona:
 |Repetition Penalty|1.2|Eliminates stuttering on complex weapon/robot names.|
 |Top_P|0.9|"Filters out low-probability ""chatter"" tokens."|
 |System Prompt|v2.2|"Implements negative constraints (No first-person ""I"")."|
+
+---
+
+## 📝 Training Log: The "Veteran Engine" (v5 Master Codex)
+**Date:** 2026-02-21
+**Status:** ✅ COMPLETED
+
+### 🎯 Objective
+Achieve "Veteran" status by applying a deep-soak training run on a fully sanitised dataset. This version prioritises British English, removes YouTube transcript noise, and focuses on high-density strategies (Testworks, Modified Xyclon synergies, and Forge priorities).
+
+### ⚙️ Configuration
+| Parameter | Value |
+| :--- | :--- |
+| **Model** | Llama-3.2-3B-Instruct (4-bit Quantized) |
+| **Total Samples** | 16,342 (Sanitised & De-noised) |
+| **Max Steps** | 4,000 |
+| **Grad Accumulation** | 8 (Effective Batch Size: 8) |
+| **Learning Rate** | 2e-5 (with 10-step Warmup) |
+| **LoRA Config** | r=16, alpha=32 |
+| **Optimizer** | AdamW 8-bit |
+| **Max Seq Length** | 512 (Optimised for RTX 3050 VRAM) |
+
+### 📊 Results
+- **Final Loss:** `1.6631`
+- **Total Runtime:** `19596.67s` (~326 minutes / 5.4 hours)
+- **Samples/sec:** `1.63`
+- **Data Coverage:** `1.96 Epochs` (Nearly two full passes of total data)
+- **Hardware:** NVIDIA RTX 3050 (4GB VRAM)
+
+### 💡 Observations
+- **Deep Convergence:** Unlike v2 (0.67 Epochs), this run reached 1.96 Epochs. The loss dipped below 1.0 several times between steps 2,800 and 3,500, indicating mastery of complex "Gold Truth" samples. 
+- **Precision Learning:** The lower learning rate ($2e-5$) successfully prevented the model from "breaking" during the 5.4-hour burn. The loss trend was stable with healthy spikes when encountering new technical clusters.
+- **VRAM Efficiency:** By capping sequence length at 512, the RTX 3050 maintained thermal and mathematical stability throughout the entire "Long Burn" without any fragmentation issues.
+
