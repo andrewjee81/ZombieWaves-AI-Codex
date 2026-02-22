@@ -21,24 +21,13 @@ DATA FORMAT: ChatML (System, User, Assistant)
 import json
 import random
 import os
+import re
 from pathlib import Path
+from config import LOCAL_DATA_PATH, SYSTEM_PROMPT, VERSION
 
-"""
-V5 Polished Prompt after the great purge. 
-Original version of system prompt was too "polite" and generic.
-"""
-SYSTEM_PROMPT = (
-    "You are the Zombie Waves AI Codex, a veteran strategy engine. "
-    "Use British English. You specialise in mechanical synergies (e.g., Reload Loops, "
-    "Shatter-Execution) and high-efficiency camp progression. "
-    "Provide technical, high-density advice based on 'Gold Truth' game logic. "
-    "Avoid generic trait definitions; instead, explain how traits interact within a build. "
-    "Stay strictly in character and only discuss Zombie Waves content."
-)
-
-GOLD_SOURCES = ['master_codex.jsonl','zombie_waves_pdf_codex_STRATEGY_ONLY.jsonl']
+GOLD_SOURCES = ['master_codex.jsonl']
 SILVER_SOURCES = ['zombie_waves_reddit_filtered.jsonl','zombie_waves_discord_chatml_refined.jsonl']
-OUTPUT_FILE = Path('./data') / 'training_master_v5_weighted.jsonl'
+OUTPUT_FILE = LOCAL_DATA_PATH / f'training_master_v{VERSION}_weighted.jsonl'
 GOLD_WEIGHT = 5
 
 def process_line(line):
@@ -48,6 +37,10 @@ def process_line(line):
     for message in data['messages']:
         if message['role'] == 'system':
             message['content'] = SYSTEM_PROMPT
+
+            # Strip Urls and clean newlines
+            message['content'] = re.sub(r'https?://\S+', '', message['content'])
+            message['content'] = message['content'].replace('\n', ' ').replace('\r', '')
     return data
 
 def merge_datasets():
@@ -56,7 +49,7 @@ def merge_datasets():
 
     # Process GOLD (5x)
     for source in GOLD_SOURCES:
-        source = Path('./data') / source
+        source = LOCAL_DATA_PATH / source
 
         if os.path.exists(source):
             with open(source, 'r', encoding='utf-8') as f:
@@ -67,7 +60,7 @@ def merge_datasets():
 
     # Process SILVER (1x)
     for source in SILVER_SOURCES:
-        source = Path('./data') / source
+        source = LOCAL_DATA_PATH / source
         
         if os.path.exists(source):
             with open(source, 'r', encoding='utf-8') as f:

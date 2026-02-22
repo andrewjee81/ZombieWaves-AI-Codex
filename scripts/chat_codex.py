@@ -1,47 +1,47 @@
+"""
+================================================================
+ZOMBIE WAVES AI CODEX: VETERAN INFERENCE ENGINE (v6.1)
+================================================================
+ARCHITECTURE: Llama-3.2-3B-Instruct (Unsloth 4-bit)
+DNA MARKERS:  Exploit-Aware, Anti-Stutter, British English Meta
+================================================================
+DESCRIPTION:
+This script facilitates real-time interaction with the fine-tuned 
+v6.1 adapter. It leverages the "Gold Truth" knowledge base to 
+provide mechanical denials (e.g., EoH/Miniclip separation) and 
+high-tier progression strategy.
+
+SYSTEM STATE:
+- Persona: Veteran Strategy Engine (Static Enforcement)
+- Logic:   Gold Truth Anchored (5:1 Weighted Data)
+- Meta:    2026 Global Version
+================================================================
+"""
+
 import torch
+import os
+import json
+from datetime import datetime
 from unsloth import FastLanguageModel
 from unsloth.chat_templates import get_chat_template
+from config import LOG_PATH, MODEL_PATH, SYSTEM_PROMPT, VERSION_NAME
 
-# --- CONFIG ---
-MODEL_PATH = "./final_codex_model_v4"
+MAX_SEQ_LENGTH = 2048
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name = MODEL_PATH,
-    max_seq_length = 2048,
+    max_seq_length = MAX_SEQ_LENGTH,
     load_in_4bit = True,
 )
 FastLanguageModel.for_inference(model)
 tokenizer = get_chat_template(tokenizer, chat_template = "llama-3.2")
 
-SYSTEM_PROMPT = (
-    "### ZOMBIE WAVES MASTER CODEX ###\n"
-    "--- CORE ENGINE LAWS ---\n"
-    "1. THE RELOAD LAW (MX): MX = Arbalest + Miniclip. Procs on reload. Mandatory pairing.\n"
-    "2. THE HIT-RATE LAW (LIZZY): Lizzy = Volt Gun/Boreas. High Mag/Fire Rate. FORBIDDEN: Miniclip.\n"
-    "3. THE ELEMENTAL LAW (SCORCHED EARTH): Fire Engine. Best with MOLLY or LIZZY. Focus on Fire Tree.\n"
-    "4. WEAPON DATA: EoH = Wind/Frost (Endgame Wind). Volt Gun = Lightning.\n"
-    "--- OUTPUT STYLE ---\n"
-    "Technical British Veteran. Bullet points only. No first-person pronouns."
-)
-
-def fact_check(text):
-    # Hard-correcting the model's common logic failures
-    corrections = {
-        "Voltpistol": "Volt Gun",
-        "Modified Xyclon": "MX",
-        "Mini-clip": "Miniclip",
-        "victims": "zombies", # "Victims" is another weird translation quirk
-    }
-    for wrong, right in corrections.items():
-        text = text.replace(wrong, right)
-    return text
-
 def chat():
-    print("✅ CODEX v2.7: DETERMINISTIC MODE ACTIVE")
+    print(f"--- {VERSION_NAME} ---")
     
     while True:
         user_input = input("\n👤 USER: ")
-        if user_input.lower() in ["exit", "clear"]: break
+        if user_input.lower() in ["exit", "clear", "quit"]: break
 
         # Fresh context every turn to prevent 'persona drift'
         messages = [
@@ -60,7 +60,7 @@ def chat():
         # 2. Unpack with ** to satisfy the model's requirements
         outputs = model.generate(
             **inputs,             
-            max_new_tokens = 150,
+            max_new_tokens = 250,
             temperature = 0.0,    # Kill the 'idiot' persona by removing randomness
             do_sample = False,    # Forced Greedy Decoding
             repetition_penalty = 1.2,
@@ -72,6 +72,7 @@ def chat():
         response = tokenizer.decode(outputs[0][input_length:], skip_special_tokens=True)
 
         # THE URL EXECUTIONER: If the model tries to show a link, we block it.
+        '''
         if "http" in response or "redd.it" in response:
             final_response = (
                 "TECHNICAL ERROR: Source data contains image artifacts. "
@@ -79,7 +80,22 @@ def chat():
                 "Arbalest is the preferred pairing for 'Last Shot' proc loops."
             )
         else:
-            final_response = fact_check(response.strip())        
+        '''
+        final_response = response.strip()
+
+        # Log to Markdown with Metadata
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"""
+---
+### 🧪 Inference Test: {timestamp}
+* **Model:** `{os.path.basename(MODEL_PATH)}`
+* **Max Seq Length:** `{MAX_SEQ_LENGTH}`
+* **Prompt Version:** `{VERSION_NAME}`
+* **Query:** {user_input}
+* **Response:** > {final_response}
+"""  
+        with open(LOG_PATH, "a", encoding="utf-8") as f:
+            f.write(log_entry)                    
         
         print(f"\n🤖 CODEX: {final_response}")
 

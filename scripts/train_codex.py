@@ -1,13 +1,12 @@
 '''
-Module: train_codex.py
-Project: ZombieWaves-AI-Codex
+================================================================
+ZOMBIE WAVES AI CODEX: TRAINING SUITE
+================================================================
 Description:
     Processes raw Reddit snapshots to remove PII (Personally Identifiable Information).
     Filters out 'deleted' or 'removed' content and applies a blacklist of post IDs
     to respect user 'Right to Erasure' requests.
 Key Objective: Anonymise data while preserving strategic game context.
-
-
 
 4-bit Quantization: Shrinks the model so it occupies roughly 3.5GB of your 4GB.
 
@@ -26,6 +25,7 @@ from trl import SFTTrainer
 from transformers import TrainingArguments
 from datasets import load_dataset
 from unsloth.chat_templates import get_chat_template
+from config import VERSION_NAME, LOCAL_DATA_DIR, EXT_MODEL_DIR, VERSION_NO, TRAINING_DATA, MODEL_PATH
 
 # 1. Load Model with 4-bit Quantization (Optimised for 4GB 3050)
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -45,9 +45,7 @@ model = FastLanguageModel.get_peft_model(
 )
 
 # 3. Load Dataset
-script_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir = os.path.dirname(script_dir)
-data_path = os.path.join(root_dir, "data", "training_master_v5_weighted.jsonl")
+data_path = os.path.join(LOCAL_DATA_DIR, TRAINING_DATA)
 
 # Load the dataset
 dataset = load_dataset("json", data_files=data_path, split="train")
@@ -69,11 +67,10 @@ def formatting_prompts_func(examples):
 dataset = dataset.map(formatting_prompts_func, batched = True)
 
 # 5. Path Setup
-external_drive_path = "/mnt/d/Project Codex/ZombieWaves-AI-Codex-Train"
-final_model_path = os.path.join(external_drive_path, "final_codex_model_v5")
+#final_model_path = os.path.join(EXT_MODEL_DIR, MODEL_FOLDER)
 
-if not os.path.exists(external_drive_path):
-    os.makedirs(external_drive_path)
+if not os.path.exists(EXT_MODEL_DIR):
+    os.makedirs(EXT_MODEL_DIR)
 
 # 6. The "3050 Stable" Config for Low VRAM
 trainer = SFTTrainer(
@@ -83,7 +80,7 @@ trainer = SFTTrainer(
     dataset_text_field = "text",
     max_seq_length = 512,
     args = TrainingArguments(
-        output_dir = external_drive_path,
+        output_dir = EXT_MODEL_DIR,
         per_device_train_batch_size = 1,
         gradient_accumulation_steps = 8, 
         warmup_steps = 10,       # Slightly more warmup for a longer run
@@ -99,14 +96,14 @@ trainer = SFTTrainer(
     ),
 )
 
-print("\n🚀 ENGINE READY. Training ZombieWaves-AI-Codex V5 with weighted codex...")
+print(f"\nENGINE READY. Training ZombieWaves-AI-Codex V{VERSION_NO} with weighted codex...")
 trainer.train()
 
 print(f"✅ Training Complete. Saving Master Codex...")
-model.save_pretrained(final_model_path)
-tokenizer.save_pretrained(final_model_path)
+model.save_pretrained(MODEL_PATH)
+tokenizer.save_pretrained(MODEL_PATH)
 
 # Optional: Save as GGUF for mobile/local app use later?
-# model.save_pretrained_gguf(final_model_path, tokenizer, quantization_method = "q4_k_m")
+# model.save_pretrained_gguf(MODEL_PATH, tokenizer, quantization_method = "q4_k_m")
 
-print(f"✨ Master Codex v2 ready at: {final_model_path}")
+print(f"{VERSION_NAME} ready at: {MODEL_PATH}")

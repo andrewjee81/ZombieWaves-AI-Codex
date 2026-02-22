@@ -547,3 +547,302 @@ Achieve "Veteran" status by applying a deep-soak training run on a fully sanitis
 - **Precision Learning:** The lower learning rate ($2e-5$) successfully prevented the model from "breaking" during the 5.4-hour burn. The loss trend was stable with healthy spikes when encountering new technical clusters.
 - **VRAM Efficiency:** By capping sequence length at 512, the RTX 3050 maintained thermal and mathematical stability throughout the entire "Long Burn" without any fragmentation issues.
 
+
+---
+### 🧪 Inference Test: 2026-02-21 21:21:41
+* **Model:** `final_codex_model_v5`
+* **max_seq_length:** 512`
+* **Gen Config:** `{
+  "max_new_tokens": 256,
+  "temperature": 0.35,
+  "top_p": 0.9,
+  "repetition_penalty": 1.2,
+  "do_sample": true,
+  "use_cache": true
+}
+* **Prompt Version:** `V5 veteran-level advice`
+* **Query:** What is the optimal trait stacking logic for the Frostfall Rocket Launcher?
+* **Response:** > The **Frostfall** rocket launcher relies entirely on freeze duration to execute its core mechanic—chain lightning freezes that scales with projectile count. 
+
+**Optimal Trait Stack:** 
+1. **Freeze Tree**: Max rank Freeze (left side). This provides 100% base freeze duration and increases by 20% per elite killed.
+2. **Lightning Mastery**: Rank 4 Lightning (right top). Increases chain length by 50%.
+3. **Fire Rate & Crit**: Any Fire Rate or Crit rating works because it directly boosts projectile frequency.
+
+**Avoid:**
+- Miniclip: Reduces fire rate which contradicts your goal of maximizing chain speed through frequent fires.
+- Execution: While this enhances kill efficiency against frozen enemies, it does not increase overall freeze duration necessary for the Frostfall's chain lightening effect.
+
+This setup ensures you maintain an uninterrupted chain of frozen targets while simultaneously increasing your damage output due to increased projectile frequency. The Frostfall is best used as a sustain weapon where long-term freezing keeps multiple targets locked down indefinitely. It excels at pushing stages far beyond recommended difficulty levels without requiring reload-based scaling strategies like other weapons do.
+
+---
+### 🧪 Inference Test: 2026-02-21 21:21:45
+* **Model:** `final_codex_model_v5`
+* **max_seq_length:** 512`
+* **Gen Config:** `{
+  "max_new_tokens": 256,
+  "temperature": 0.35,
+  "top_p": 0.9,
+  "repetition_penalty": 1.2,
+  "do_sample": true,
+  "use_cache": true
+}
+* **Prompt Version:** `V5 veteran-level advice`
+* **Query:** How should I build Modified Xyclon (MX) for high-efficiency stage clearing?
+* **Response:** > Modified Xyclon is an S-tier hero best used with the Frost Meteor weapon. ### Synergy: MX requires Frost Tree to activate his freeze abilities. ### Core Traits: This build focuses entirely on freeze duration and damage output. ### Optimal Loadout: Pair MX with Frost Meteor and robots Penguin/Reindeer to maximize frozen zone size and duration.
+
+---
+### 🧪 Inference Test: 2026-02-21 21:21:55
+* **Model:** `final_codex_model_v5`
+* **max_seq_length:** 512`
+* **Gen Config:** `{
+  "max_new_tokens": 256,
+  "temperature": 0.35,
+  "top_p": 0.9,
+  "repetition_penalty": 1.2,
+  "do_sample": true,
+  "use_cache": true
+}
+* **Prompt Version:** `V5 veteran-level advice`
+* **Query:** Which robots provide the best synergy for a Voltgun build?
+* **Response:** > For **Voltgun**, focus on **Lightning** and **Fire Rate** synergies.
+
+1. **Master Gingerbread Robot**: Provides **Lightning Damage** scaling with every hit. His passive increases Fire Rate by 10% when standing near enemies.
+2. **Pyreon**: Concentrates Lightning damage into explosive bursts. This robot is particularly effective against elite/bosses due to its ability to trigger lightning storms upon death.
+3. **Calamity's Edge**: Offers consistent **Fire Rate Scaling** that complements your reload frequency from the Voltgun. It also provides additional Lightening procs during his Ultimate skill activation.
+
+This combination ensures you consistently generate massive electrical shock waves across all stages of the game without relying solely on elemental upgrades or specific hero abilities. Focus on maximizing these three robots early to create an optimal setup tailored specifically around your Voltgun playstyle.
+
+---
+### 🧪 Inference Test: 2026-02-21 21:22:07
+* **Model:** `final_codex_model_v5`
+* **max_seq_length:** 512`
+* **Gen Config:** `{
+  "max_new_tokens": 256,
+  "temperature": 0.35,
+  "top_p": 0.9,
+  "repetition_penalty": 1.2,
+  "do_sample": true,
+  "use_cache": true
+}
+* **Prompt Version:** `V5 veteran-level advice`
+* **Query:** Explain the 'Veteran' approach to boss tactics in the late-game stages.
+* **Response:** > The **Veteran** technique is an advanced survival mechanic that exploits the timing of elite/king/penguin death cycles.
+
+### Strategy Overview
+In later stages, you must manage your health carefully during each wave cycle. The goal revolves around maximizing survivability without wasting valuable resources on unnecessary damage mitigation techniques like defensive shields or invincibility frames.
+
+### Technique Explanation
+1.  **Elite Timing**: When facing elites such as the **Skizzy Lizzy**, focus solely on killing them immediately upon entering their range zone. This forces you into a tight "kill window," where if you fail to kill both before they can move out of range again, it becomes nearly impossible.
+2.  **King/Penguin Windowing**: For bosses with king/penguins, use the same principle: time your kills precisely when these secondary units enter their respective ranges. If timed correctly, this allows for optimal DPS output while minimizing overall movement speed.
+3.  **Health Management**: To maintain long-term viability, prioritize avoiding excessive damage spikes early-on by focusing on efficient crowd control mechanics rather than investing too heavily in immediate shield uptime. As the fight progresses, gradually shift towards more aggressive damage accumulation strategies—especially once elite/kings/penguins have been killed off entirely—to maximize resource efficiency throughout the entire stage
+
+---
+### 🧪 Inference Test: 2026-02-21 21:22:12
+* **Model:** `final_codex_model_v5`
+* **max_seq_length:** 512`
+* **Gen Config:** `{
+  "max_new_tokens": 256,
+  "temperature": 0.35,
+  "top_p": 0.9,
+  "repetition_penalty": 1.2,
+  "do_sample": true,
+  "use_cache": true
+}
+* **Prompt Version:** `V5 veteran-level advice`
+* **Query:** What are the traits to use for Arbalest when paired with MX?
+* **Response:** > Arbalest + MX = Boreas of hell.
+
+Traits: 
+
+* Miniclip
+* Rapid Fire
+* Aegis 
+* Boss Damage
+* Crit Chance 100%
+
+This is your go-to combo for any boss or elite that doesn't have a lot of HP. It's also good against bosses like the Elusive Assassin because they take forever to die but you can kill them quickly enough without having to dodge their attacks every few seconds.
+
+---
+### 🧪 Inference Test: 2026-02-22 00:08:25
+* **Model:** `final_codex_model_v5.1`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.1: Patched veteran-level advice`
+* **Query:** What are you?
+* **Response:** > The Boss is URS (Ultimate Rescue Shield). 
+
+**Boss Meta:** Mandatory Trait Priority - Shield/Defence Tree (S-Shield skin mandatory): Shatter > Miniclip for defensive buffs. 
+Optical Effect: A 'Shield' barrier that absorbs wave damage – ideal for F2P or low-Lvl players pushing higher waves.
+
+**Character Synergy:** URS is Defence-specific (no inherent buff against hordes)) designed for survival modes like Testwork or Arena where survivability trumps raw DPS. Pair with Defensify Robot to maximise 'Shield Wall' utility.
+
+---
+### 🧪 Inference Test: 2026-02-22 00:16:58
+* **Model:** `final_codex_model_v5.1`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.1: Patched veteran-level advice`
+* **Query:** I have lizzy and recently aquired EoH. Is this a good pair and what traits should i use?
+* **Response:** > EoH is the best choice for new players due to its passive (Blind Shot) allowing you to switch weapons mid-game without loss of power growth. Pair EoH with Lulu + Frost Dragon for immediate wave clearing before scaling for Boss/Elite slayer stages.
+
+**Essential Build Triggers:** 
+1. **Entrenched**: Prioritise the HMG staple 'Entrenchment' by stacking Shatter-Tasks (+Frost Dragon provides natural entrenchment buff). This feature creates a'safety zone' around your position, forcing mobs through you while keeping yourself behind elite/boss buffs.
+2. **Miniclip + HighFrequency Firestorms**: Focus heavily on Miniclip (active procs 2 max shots) as primary damage source. Combine with high-frequency firestorm activation (e.g., Lightning/Bolt trees) to maximise burst frequency. This builds upon EoH's innate 'Blind Shooting' mechanic – each shot procning elemental status effects increases hit frequency exponentially.
+
+**Recommended Robot Loadout:** 
+- Penguin (Shatter-Procision): Mandatory for EoH to provide precise boss-trip CC scaling.
+- Bunny Band (Assist-Buff): Essential for increasing EoH
+
+---
+### 🧪 Inference Test: 2026-02-22 00:21:08
+* **Model:** `final_codex_model_v5.1`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.1: Patched veteran-level advice`
+* **Query:** What is the difference between an MX build and an EoH build?
+* **Response:** > Essential Differentiation:** MX (Lulu) prioritises 'Frost Tree' for shatter-execution, whereas EoH focuses on 'Miniclip' buffs requiring precise trigger uptime. 
+
+Optimal Strategy:** For Shatter-based 'Burn' builds (like Voltgun), prioritise the Frost-tree (Berserk + Ullr Hatchling) even with EoH's inherent fire-buff scaling. Conversely, for Miniclip-focused 'Precision' builds (Like Christmas Rifle), focus EoH's elemental buff scaling directly onto active weapon slots.
+
+---
+### 🧪 Inference Test: 2026-02-22 00:46:31
+* **Model:** `final_codex_model_v5.2`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.2: Logic Wash & 2026 Meta Verified`
+* **Query:** I'm using Lizzy and EoH, should I pick Miniclip?
+* **Response:** > No. EoH is an Accurate Meteor weapon because it requires exactly one of the following upgrades: **Lizzy-EoH Robot Combinations**: 1. **Bunny Band** + EoH from Boss Drop to legendary (+5%) Aegis. 2. **Arctic Mechhead** + EoH from Boss Drop to legendary (+5%). This allows natural fire rate scaling during active combat. Never use Miniclip as priority; replace entirely with High Efficiency Weapon skins like Frost Dragon or Balrog.
+
+---
+### 🧪 Inference Test: 2026-02-22 00:46:45
+* **Model:** `final_codex_model_v5.2`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.2: Logic Wash & 2026 Meta Verified`
+* **Query:** who are you?
+* **Response:** > Who is who?
+
+---
+### 🧪 Inference Test: 2026-02-22 00:47:02
+* **Model:** `final_codex_model_v5.2`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.2: Logic Wash & 2026 Meta Verified`
+* **Query:** What are you?
+* **Response:** > Who is Skizzy Lizzy?
+
+---
+### 🧪 Inference Test: 2026-02-22 00:51:29
+* **Model:** `final_codex_model_v5`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.2: Logic Wash & 2026 Meta Verified`
+* **Query:** What is the best weapon in the game?
+* **Response:** > The **Christmas Rifle** is currently considered the meta-endgame weapon due to its exceptional scaling performance across all campaign stages.
+
+### Synergy Summary:
+- **Elemental Damage**: Focus entirely on elemental procs for consistent wave clearing.
+- **Fire Rate & Magazine Size**: Prioritize these traits early to maximize sustained output during long battles.
+- **Crit DMG & Miniclip**: These critical damage multipliers significantly amplify your attack power when firing at elite targets or bosses with low health bars.
+
+### Recommended Traits (Optional):
+- **Frost Tree - Frostbolt**: This adds an additional layer of crowd control against swarms of weak enemies that can be exploited by the Christmas Rifle's fire rate and magazine size buffs.
+- **Lightning Tree - Thunderbolt**: While not as universally beneficial as frost, lightning provides excellent AoE burst utility which complements the CR’s ability to rapidly reload and chain-fire multiple projectiles per shot.
+
+### Upgrade Priority:
+1. **S-Tier Material Drops**: Save S-tier drops exclusively for this rifle until it reaches Mythic rank.
+2. **Legendary Tesseract**: Acquire one from Event Store or Guild Shop if available.
+3. **Attack Rating & Crit Chance**: Balance out ATK/ATK% and
+
+
+---
+### 🧪 Inference Test: 2026-02-22 01:19:52
+* **Model:** `final_codex_model_v5.4`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.4: [REHABILITATED]`
+* **Query:** I've taken the first two Fire Rate traits and the first Frost trait. What should I take next to unlock the full power of the Eye of the Hurricane?
+* **Response:** > Frost Mastery is mandatory for EoH due to its 30% damage scaling with frozen targets. Prioritise the Ice Crystal tree over Fire Rate or Lightning traits until you secure the Frost Tree's highest-tier traits: Entrenched Positioning (Frost Bolt stacking) and Hail Frequency (faster proc activation).
+
+---
+### 🧪 Inference Test: 2026-02-22 01:40:45
+* **Model:** `final_codex_model_v5.5`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.5: [REHABILITATED]`
+* **Query:** I'm using the Eye of the Hurricane. Should I pick Miniclip if it's the only legendary trait available?
+* **Response:** > No. Never use **Miniclip** with **Eye of the Hurricane (EoH)**. EoH is an elemental damage specialist that scales Fire Rate (+20% DM) with active shot counts. It requires the **Entrenched** trait for its shotty cooldown to scale effectively. Pair EoH with **Salvation’s Wings** (Bunny Skin) for faster reload scaling.
+
+---
+### 🧪 Inference Test: 2026-02-22 01:41:32
+* **Model:** `final_codex_model_v5.5`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.5: [REHABILITATED]`
+* **Query:** I have the first two Fire Rate traits. Which tree should I invest in next for the EoH?
+* **Response:** > EoH prioritises elemental procs over raw DPS. **Miniclip Tree** is mandatory (+Fire rate/Miniclip trigs): Take 'Frost Trees' like HMG/Crush if you must take them for overall CP gain. Focus exclusively on Miniclip (Active Boost) and Entrenched during active phases.
+
+---
+### 🧪 Inference Test: 2026-02-22 01:42:49
+* **Model:** `final_codex_model_v5.5`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v5.5: [REHABILITATED]`
+* **Query:** What are the traits to use for Arbalest when paired with MX?
+* **Response:** > Arbalest requires a 'Shatter Execution' build. Prioritise **Burst** tree skills like Miniclip/Entrenched (assault rifle buffs), coupled with **Rainbow** (colour-coded trait diversity) to secure the 'Last Shot' multipliers needed for mid-stage boss killing. The **Frost Tree** is optional (CC specifically) as it does not provide consistent elemental procs – Focus on Miniclip+Entrenchment (+30% ammo buff).
+
+---
+### 🧪 Inference Test: 2026-02-22 09:40:37
+* **Model:** `final_codex_model_v5.5`
+* **Max Seq Length:** `2048`
+* **Prompt Version:** `CODEX v6.0: [GOLD TRUTH ANCHORED]`
+* **Query:** I'm using the EoH. Should I take the trait that reduces my ammo to 1?
+* **Response:** > For EoH, **minimum priority traits** include: 
+
+1. Large Ammo capacity (reduces effectiveness). 
+2. Fire Rate (-20% normal). 
+3. HP (never use this tree); focus on Bullet DMG (+5%) or Penetration (+30%).
+
+**Prioritisation:** 
+1. **Bullet DMG (+5%) / Power Shot**: Essential for early boss/farm clearing.
+2. **Ammu Clip (Minimized)**: Choose 'Single Shot' if you're new to EoH; skip this trait until you master the 'Last Shot Matters' execution loop.
+3. **Entrenched (+50% bullet damage)**: Mandatory pick for endgame survival waves.
+
+Never select **Fire Rate (-20%)** as it severely handicaps EoH DPS. Always prioritise Bullet DMG oversets like Entrenchment or Miniclip.
+
+---
+
+## 🛑 THE GREAT PURGE: Transition to v6.1 (Gold Truth)  
+Date: 2026-02-22
+
+Status: v5 Adapter Purged / Environment Sanitised  
+
+**Goal:** Eradicate "Ammu Clip" hallucinations and enforce EoH/MX mechanical separation.
+
+1. Forensic Analysis of v5 Failure  
+  - **Hallucination Detected:** Inference tests confirmed the model was still suggesting "Ammu Clip" (Single Shot) for the Eye of the Hurricane (EoH).
+
+  - **Root Cause:** Polluted SILVER_SOURCES and legacy adapter weights. Even with weighting, the "Ammu" token was too strong in the local D: drive training folder.
+
+  - **Solution:** Deleted all local checkpoint-XXXX folders. Switched to the factory-fresh Unsloth cache in WSL (/home/andrew/.cache/huggingface/hub) to ensure the model starts with a "Zero-Knowledge" base regarding past errors.
+
+2. v6.1 Architecture: "Authority Weighting"  
+To solve the "Reddit Chatter" noise identified in earlier logs, we are implementing a 5:1 Gold-to-Silver ratio in the merge_training_data_v2.py script.
+
+  - Gold Standard (Repeated 5x): * master_codex.jsonl (Scrubbed)
+    - `strategy_guide.jsonl` (Veteran PDF logic)
+    - `logic_patch.jsonl` (21 high-density mechanical denials)
+
+  - Silver Standard (1x):
+    - Sanitised Reddit/Discord data.
+    - **URL Scrubbing:** All `http/https strings` stripped via regex to prevent "link rot" hallucinations.
+    - **Newline Scrubbing:** Removed all `\n` within strings to prevent JSONL corruption in Ubuntu.
+
+3. Mechanical Enforcement (The "Denial" Layer)
+v6.1 is hardcoded to strictly separate build types:
+
+  - **Eye of the Hurricane (EoH):** Mandates Windborne (Dodge Tree). Strictly prohibits Miniclip.
+
+  - **Modified Xyclon (MX):** Mandates Miniclip (Reload Loop).
+
+  - **Diamond Economy:** Re-anchored the 27,000 Diamond Rule for Aeroplane Chess as a non-negotiable "Gold Truth."
+
+4. Training Parameters (The Long Burn)  
+
+  - **Step Count:** 1,200 (Increased for deeper "Gold Truth" anchoring).
+
+  - **Environment:** Ubuntu 24.04.1 LTS.
+
+  - **Optimisation:** Unsloth 4-bit (3050 4GB VRAM safety limit).
+
+  - **Prompt:** Shifted to Codex v6.1: [MECHANICAL ENGINE]—stripped out "polite" filler; forced technical density.

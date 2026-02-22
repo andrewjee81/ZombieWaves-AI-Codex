@@ -1,5 +1,6 @@
 """
-🚀 PROJECT: Zombie Waves AI Codex - Inference & Validation (v2)
+================================================================
+ZOMBIE WAVES AI CODEX: Inference & Validation (v2)
 ================================================================
 DESCRIPTION:
 This script serves as the primary validation gate for the 
@@ -11,9 +12,6 @@ VALIDATION METRICS:
 1. Technical Precision: Does the model correctly name traits/gear?
 2. Reasoning Alignment: Does it follow the 5x weighted veteran logic?
 3. Persona Integrity: Does it maintain the 'Expert Strategy Assistant' tone?
-
-TARGET MODEL: final_codex_model_v2 (Step 1200 / Loss 1.78)
-HARDWARE: NVIDIA RTX 3050 (4GB VRAM)
 ================================================================
 """
 
@@ -21,27 +19,10 @@ import os
 import torch
 from unsloth import FastLanguageModel
 from datetime import datetime
+import json
+from config import EXT_MODEL_DIR, LOG_PATH, SYSTEM_PROMPT, MODEL_FOLDER, VERSION_NAME
 
-# --- CONFIGURATION & VERSIONING ---
-MODEL_PATH = "/mnt/d/Project Codex/ZombieWaves-AI-Codex-Train/final_codex_model_v2"
-LOG_FILE_PATH = "/mnt/c/inetpub/wwwroot/GitHub/ZombieWaves-AI-Codex/docs/training_log.md"
-
-# ================================================================
-# ⚙️ MASTER CONFIGURATION: ZOMBIE WAVES AI CODEX (v2.2)
-# ================================================================
-# This configuration is tuned to suppress "Silver" Reddit noise
-# and prioritize "Gold" PDF strategy logic (Step 1200 / Loss 1.78).
-PROMPT_VERSION = "v2.2 (Exploit-Aware & Anti-Stutter)"
-
-SYSTEM_PROMPT = (
-    "You are the Zombie Waves AI Codex, a technical strategy engine. "
-    "Your objective is to provide high-level synergies including 'Infinite Ammo' exploits and 'Last Shot' procs. "
-    "\n\nCRITICAL CONSTRAINTS:"
-    "\n- NEVER use first-person language (No 'I', 'me', 'my')."
-    "\n- STOP word repetitions (No double names like 'Edge's Edge')."
-    "\n- FOCUS on mechanics: Miniclip, Entrenched, and Reload-based triggers."
-    "\n- If Arbalest is mentioned with MX, prioritize 'Infinite Ammo' loop logic."
-)
+MODEL_PATH = os.path.join(EXT_MODEL_DIR, MODEL_FOLDER)
 
 # 🧪 OPTIMIZED GENERATION HYPERPARAMETERS
 GEN_CONFIG = {
@@ -64,15 +45,15 @@ TEST_QUERIES = [
 ]
 
 def run_validation():
-    print(f"📦 Loading Fine-Tuned Codex: {MODEL_PATH}")
+    print(f"Loading Fine-Tuned Codex: {MODEL_PATH}")
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name = MODEL_PATH,
-        max_seq_length = 2048,
+        max_seq_length = 512,
         load_in_4bit = True,
     )
     FastLanguageModel.for_inference(model)
 
-    print(f"\n🚀 Starting Validation using Prompt Version: {PROMPT_VERSION}")
+    print(f"\nStarting Validation using Prompt Version: {VERSION_NAME}")
     print("-" * 30)
 
     for query in TEST_QUERIES:
@@ -103,12 +84,14 @@ def run_validation():
 ---
 ### 🧪 Inference Test: {timestamp}
 * **Model:** `{os.path.basename(MODEL_PATH)}`
-* **Prompt Version:** `{PROMPT_VERSION}`
+* **max_seq_length:** 512`
+* **Gen Config:** `{json.dumps(GEN_CONFIG, indent=2)}
+* **Prompt Version:** `{VERSION_NAME}`
 * **Query:** {query}
 * **Response:** > {response.strip()}
 """        
 
-        with open(LOG_FILE_PATH, "a", encoding="utf-8") as f:
+        with open(LOG_PATH, "a", encoding="utf-8") as f:
             f.write(log_entry)
         
         print(f"\n❓ QUERY: {query}")
