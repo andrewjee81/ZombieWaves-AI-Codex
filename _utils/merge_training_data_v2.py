@@ -21,13 +21,17 @@ DATA FORMAT: ChatML (System, User, Assistant)
 import json
 import random
 import os
+import sys
 import re
 from pathlib import Path
-from config import LOCAL_DATA_PATH, SYSTEM_PROMPT, VERSION
+
+# Add the parent directory (root) to the python path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from config import LOCAL_DATA_DIR, SYSTEM_PROMPT, VERSION_NO
 
 GOLD_SOURCES = ['master_codex.jsonl']
 SILVER_SOURCES = ['zombie_waves_reddit_filtered.jsonl','zombie_waves_discord_chatml_refined.jsonl']
-OUTPUT_FILE = LOCAL_DATA_PATH / f'training_master_v{VERSION}_weighted.jsonl'
+OUTPUT_FILE = LOCAL_DATA_DIR + f'training_master_v{VERSION_NO}_weighted.jsonl'
 GOLD_WEIGHT = 5
 
 def process_line(line):
@@ -49,7 +53,7 @@ def merge_datasets():
 
     # Process GOLD (5x)
     for source in GOLD_SOURCES:
-        source = LOCAL_DATA_PATH / source
+        source = os.path.join(LOCAL_DATA_DIR, source)
 
         if os.path.exists(source):
             with open(source, 'r', encoding='utf-8') as f:
@@ -60,7 +64,7 @@ def merge_datasets():
 
     # Process SILVER (1x)
     for source in SILVER_SOURCES:
-        source = LOCAL_DATA_PATH / source
+        source = os.path.join(LOCAL_DATA_DIR, source)
         
         if os.path.exists(source):
             with open(source, 'r', encoding='utf-8') as f:
