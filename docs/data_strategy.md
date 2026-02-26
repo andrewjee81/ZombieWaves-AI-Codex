@@ -112,3 +112,11 @@ By shifting the data weight from Quantity to Mechanical Accuracy, the v5 model i
   1. **Sound like a Veteran:** Provide high-density technical advice using British English.
   2. **Eliminate Contradictions:** Provide a single, coherent "Best-in-Slot" strategy for any given hero/weapon.
   3. **Reduce Hallucination:** By removing "Math Noise," the AI will describe how a build scales rather than guessing wrong damage numbers.
+
+### 5. Audit Logic Update (2026-02-26):
+
+- **Constraint Relaxation:** Removed "British English" spelling requirements from the 8B Audit script.
+
+- **Rationale:** To reduce instructional overhead and maximize processing speed on Reddit-sourced data.
+
+- **Persona Preservation:** The "Veteran" British English tone is deferred to the Training Phase, where it will be enforced via the System Prompt during SFT.

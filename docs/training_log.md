@@ -846,3 +846,46 @@ v6.1 is hardcoded to strictly separate build types:
   - **Optimisation:** Unsloth 4-bit (3050 4GB VRAM safety limit).
 
   - **Prompt:** Shifted to Codex v6.1: [MECHANICAL ENGINE]—stripped out "polite" filler; forced technical density.
+
+---
+
+## 🔍 The Comparative Sieve: Python vs. AI Judge
+ 
+
+### 🛠️ Tooling & Scripts
+- **Method A (Heuristic):** [_utils/auditor_python.py](_utils/auditor_python.py) — A regex-based script focusing on keyword detection and formatting.
+- **Method B (Semantic):** [_utils/auditor_llama.py](_utils/auditor_llama.py) — A Llama-3.2-3B judge model filtering for mechanical accuracy and social noise.
+- **Analysis Utility:** [_utils/auditor_comparison.py](_utils/auditor_comparison.py) — Used to isolate the "Regex Only" entries to find false positives.
+
+## 🔍 Reddit Parallel Audit: The Great Purge
+**Date:** 2026-02-23  
+**Source Data:** `zombie_waves_reddit_filtered.jsonl`
+
+To finalize the v6.1 dataset, a second parallel benchmark was conducted on Discord data. Discord was identified as the highest-risk source due to the volume of slang, social fragments, and mechanical misconceptions.
+
+### 📊 Benchmark Results
+| Metric | Regex Sanitiser | AI Judge (Llama 3.2) |
+| :--- | :--- | :--- |
+| **Kept** | 4,257 | **3,934** |
+| **Deleted** | 1,643 | 452 (Found extra trash) |
+
+**Insight:** The AI Judge was more surgical. It successfully binned **452 entries** that the Python script thought were strategy but were actually social chatter or Gacha pulls. This confirms that semantic auditing is mandatory for the v6.1 "Gold Truth" standard.
+
+### 📊 Benchmark Results (Discord Intelligence Gap)
+| Metric | Regex Sanitiser (Method A) | AI Judge (Method B) |
+| :--- | :--- | :--- |
+| **Kept** | 1,855 | **542** |
+| **Deleted** | 326 | 1,639 |
+| **Retention Rate** | 85.0% | **24.8%** |
+
+### 🔍 Analysis of the "Trash" Delta (1,374 entries)
+The AI Judge successfully purged 1,374 entries that passed the Regex filter but failed the "Veteran" standard. Key reasons for deletion included:
+
+1. **Social Noise:** Heavy removal of "dm me," "thanks," and chatty fillers that dilute model authority.
+2. **Ambiguity:** Purged user questions that lacked clear strategic answers ("or is it like...").
+3. **Mechanical Conflict:** Identification of builds suggesting Miniclip/Reload synergies with weapons that do not benefit from them (e.g., EoH context).
+
+### 🏁 Final Dataset Decision
+Based on these results, **only the 542 AI-vetted entries** will be moved to the final merge. Using the Regex-only set would have introduced a 75% noise ratio into the Discord portion of the training, likely causing the "stuttering" observed in v5.
+
+**Status:** Discord Gold set locked. Proceeding to final merge with Reddit Gold (3,934) and Master Codex (5:1 weighting).
