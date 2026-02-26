@@ -1,5 +1,6 @@
 # Ignore the actual data dumps
 *.jsonl
+.json
 *.zst
 /mnt/d/
 
@@ -11,5 +12,7 @@ __pycache__/
 env/
 unsloth_compiled_cache/
 zombie_codex_outputs/
+
+# Ignore local folders
 _data_prep/
 outputs/

@@ -63,5 +63,5 @@ if __name__ == "__main__":
     create_instruction_pairs(
         '/mnt/d/Project Codex/cleaned_posts.jsonl',
         '/mnt/d/Project Codex/cleaned_comments.jsonl',
-        '/mnt/d/Project Codex/final_training_data.jsonl'
+        '/mnt/c/inetpub/wwwroot/GitHub/ZombieWaves-AI-Codex/data/reddit_paired_data.jsonl'
     )

@@ -7,18 +7,19 @@ Description: Converts Alpaca-style Reddit JSONL into conversational ChatML.
 
 import json
 import os
+import sys
+from pathlib import Path
+
+# Adjust path to import from your project root
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
+from config import LOCAL_DATA_DIR, SYSTEM_PROMPT
 
 # PATH CONFIGURATION
 # Using r"" for Windows path safety
-INPUT_FILE = r"D:\Project Codex\refined_training_data.jsonl"
-OUTPUT_FILE = "./data/zombie_waves_reddit_chatml.jsonl"
+INPUT_FILE = os.path.join(LOCAL_DATA_DIR, "reddit_paired_data.jsonl")
+OUTPUT_FILE = os.path.join(LOCAL_DATA_DIR, "zombie_waves_reddit_chatml.jsonl")
 
-# The "Guardrail" System Prompt
-SYSTEM_PROMPT = (
-    "You are the Zombie Waves AI Codex, an expert strategy assistant. "
-    "Your goal is to provide accurate, concise, and helpful gameplay advice "
-    "for Zombie Waves. Stay in character and only discuss Zombie Waves content."
-)
+# The "Guardrail" System Prompt loaded from config
 
 def convert_reddit():
     if not os.path.exists(INPUT_FILE):
