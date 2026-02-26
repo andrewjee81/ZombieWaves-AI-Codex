@@ -893,3 +893,13 @@ Based on these results, **only the 542 AI-vetted entries** will be moved to the 
 ---
 
 **Project Maintenance (2026-02-26):** > Local environment reset. Archived legacy heuristic scripts and v5 datasets. Standardised local directory structure to support the v6.1 Cloud-Hybrid workflow. All truth-anchoring now points exclusively to `master_codex.jsonl`.
+
+## Operational Strategy (2026-02-26):
+
+- **Constraint:** Reached Google Colab Free Tier GPU limit.
+
+- **Compliance:** Adhering to Usage Policy regarding multiple accounts; secondary accounts will not be utilised.
+
+- **Pivot:** Testing Qwen2.5-1.5B local inference on RTX 3050 to maintain audit momentum.
+
+- **Goal:** Determine if a smaller local model can achieve acceptable "Trash" filtering while the primary cloud GPU resets.
