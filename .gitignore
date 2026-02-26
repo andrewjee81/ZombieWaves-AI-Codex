@@ -1,6 +1,6 @@
 # Ignore the actual data dumps
 *.jsonl
-.json
+*.json
 *.zst
 /mnt/d/
 
