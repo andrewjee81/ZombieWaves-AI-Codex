@@ -889,3 +889,7 @@ The AI Judge successfully purged 1,374 entries that passed the Regex filter but 
 Based on these results, **only the 542 AI-vetted entries** will be moved to the final merge. Using the Regex-only set would have introduced a 75% noise ratio into the Discord portion of the training, likely causing the "stuttering" observed in v5.
 
 **Status:** Discord Gold set locked. Proceeding to final merge with Reddit Gold (3,934) and Master Codex (5:1 weighting).
+
+---
+
+**Project Maintenance (2026-02-26):** > Local environment reset. Archived legacy heuristic scripts and v5 datasets. Standardised local directory structure to support the v6.1 Cloud-Hybrid workflow. All truth-anchoring now points exclusively to `master_codex.jsonl`.
