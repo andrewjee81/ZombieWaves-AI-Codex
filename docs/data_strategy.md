@@ -140,7 +140,7 @@ By shifting the data weight from Quantity to Mechanical Accuracy, the v5 model i
 - **Tokenization:** Native support for complex technical terms and symbols common in gaming "Silver" data.
 
 **System Instruction:**  
-Prompt Version: 7.9
+Prompt Version: 7.9  
 Date: 2026-02-27
 
 ```Plaintext
