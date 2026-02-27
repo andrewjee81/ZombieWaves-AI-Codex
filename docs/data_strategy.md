@@ -113,10 +113,94 @@ By shifting the data weight from Quantity to Mechanical Accuracy, the v5 model i
   2. **Eliminate Contradictions:** Provide a single, coherent "Best-in-Slot" strategy for any given hero/weapon.
   3. **Reduce Hallucination:** By removing "Math Noise," the AI will describe how a build scales rather than guessing wrong damage numbers.
 
-### 5. Audit Logic Update (2026-02-26):
+### 5. Audit Logic Update (2026-02-26)
 
 - **Constraint Relaxation:** Removed "British English" spelling requirements from the 8B Audit script.
 
 - **Rationale:** To reduce instructional overhead and maximize processing speed on Reddit-sourced data.
 
 - **Persona Preservation:** The "Veteran" British English tone is deferred to the Training Phase, where it will be enforced via the System Prompt during SFT.
+---
+## 📑 Project Report: AI - Auditor a.k.a The Judge  
+**Auditor Prompt (v7.8)**  
+**Engine:** Qwen2.5-3B-Instruct (4-bit)  
+**Logic Type:** Dual-Input (Context + Claim)  
+
+🏛️ Why Qwen-2.5-3B?  
+**Rationale:**  
+
+ - **Context-to-Weight Efficiency:** Provides the highest "Logical Reasoning Density" possible within a 4GB VRAM envelope.
+
+- **Instruction Following:** Demonstrates superior adherence to the [KEEP]/[REJECT]/[TRASH] rubric compared to 1B-class models.
+
+- **Speed/Throughput:** Achieves ~40-60 tokens per second locally, allowing the 17,014-record audit to complete in hours rather than days.
+
+- **Tokenization:** Native support for complex technical terms and symbols common in gaming "Silver" data.
+
+**System Instruction:**  
+
+```Plaintext
+You are the Zombie Waves AI Quality Auditor. Your mission is to extract high-value mechanical strategy.  
+VERDICT RULES:  
+- [KEEP]: Advice is mechanically sound, contains specific synergies, or actionable strategy that aligns with the Codex.
+- [REJECT]: Advice contradicts the Codex or general high-tier veteran logic.
+- [TRASH]: Social noise, generic excitement ("I love this gun"), complaints, or off-topic chatter.
+```
+**User Template:**
+
+```Plaintext
+MASTER CODEX REFERENCE: {relevant_codex}
+REDDIT POST TO AUDIT: {reddit_text}
+```
+
+📂 Auditor Prompt History (v6.1 Strategy)
+| Version | Date | Engine | Key Logic Change | Impact |
+| :--- | :--- | :--- | :--- | :--- |
+| v1.0 |	2026-02-22 |	Regex (Python) |	Hardcoded keyword matching. |	High speed; zero context awareness. |
+| v2.0 |	2026-02-23 |	Llama-3.2-3B |	Zero-shot evaluation. |	Better "Trash" detection; 4GB VRAM limits. |
+| v7.8 |	2026-02-26 |	Qwen2.5-3B |	Fuzzy-RAG Integration. |	Maps community slang to Codex Truths. |
+
+**The Auditor's Evolution:**
+
+- v1 (Regex): Fast but "blind" to context.
+
+- v2 (Local 3B): Intelligent but "rigid" regarding nomenclature.
+
+- v3 (Entity-Fuzzy 3B): Resilient and "context-aware," utilizing Semantic Expansion and Fuzzy Mapping to bridge the gap between messy Reddit slang and the Gold Truth Codex.
+
+### 1. Data Pipeline Integration (2026-02-26)  
+The Trigger: Reaching the 17,014-entry Reddit dataset.
+
+The auditor's output is strictly formatted for merge_training_data_v2.py. This ensures that only AI-vetted "Gold" data is merged with the existing Master Codex, maintaining the 5:1 Authority Weighting (Veteran Truth vs. Community Intelligence).
+
+### 2. Entity Alias Mapping (2026-02-26)  
+The Trigger: Identifying "Nomenclature Fragmentation" (e.g., "Lizzy" vs. "Voltgun").  
+
+- **System:** Transitioned the Local Auditor from a flat list to a nested dictionary mapping.
+
+- **Rationale:** To bridge the gap between "Community Slang" (e.g., Lizzy, Bory) and "Technical Truths" (e.g., Volt Gun, Boreas).
+
+- **Audit Safeguard:** Specifically targets the EoH/Miniclip Conflict by mapping all "single-shot" terminology to a unified logic check.
+
+### 3. Semantic Expansion Strategy (2026-02-26)  
+The Trigger: AI tokenization limits and the "Tesla" realization.
+
+- **Action:** Deliberately expanded in-game compound names (e.g., Voltgun → Volt Gun) in the Auditor's mapping.
+
+- **Goal:** To increase token-matching probability across noisy community data.
+
+- **Result:** Improved retrieval of "Gold Truth" context by 35% during initial testing by capturing variations like "Volt gun" and "Tesla."
+
+### 4. Retrieval Logic: Fuzzy Entity Mapping (2026-02-26)  
+The Trigger: Typos and "Messy" Reddit data (e.g., "Votlgun," "Lizi").
+
+- **Tooling:** Integrated RapidFuzz (partial_ratio) into the context retrieval function.
+
+- **Threshold:** Set at 85% to balance between catching typos (e.g., "Bory") and avoiding false positives.
+
+- **Benefit:** Allows the Auditor to anchor "Silver" data to the "Gold Truth" even when nomenclature is inconsistent or misspelled.
+
+- **Metadata Extraction (2026-02-27):**  
+  - **Action:** Retrieval function now returns a structured dictionary (text, entity, rule).
+  - **Rationale:** Decouples the "Context used by AI" from the "Logic cited in logs." 
+  - **Benefit:** Allows for quantitative analysis of the 17k records (e.g., "What % of rejected posts were related to the eoh entity?").
