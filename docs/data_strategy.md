@@ -122,6 +122,23 @@ By shifting the data weight from Quantity to Mechanical Accuracy, the v5 model i
 - **Persona Preservation:** The "Veteran" British English tone is deferred to the Training Phase, where it will be enforced via the System Prompt during SFT.
 
 ---
+## 📑 Project Report: V6.x Exploit-Aware & Anti-Stutter  
+Date: 2026-02-25  
+
+Formalisation of "Gold Truth" Master Codex (v6.1)
+
+1. The v6 Objective
+Transitioning from general "cleaning" to Hard-Coded Mechanical Law. This version established the master_codex.jsonl as the primary authority that the later v7 Auditor would use to judge Reddit data.
+
+2. Key v6 Technical Implementations
+- **Anti-Stutter Logic:** Refined the British English tone to ensure high-density, technical advice without conversational "stutter" or filler words.
+
+- **Exploit-Awareness:** Integrated specific warnings against suboptimal community "exploits" that were patched or mathematically inferior (e.g., certain reload-speed glitches).
+
+- **Weapon-Specific Denials:** Hard-coded the "Trait Denial" list, specifically focusing on the catastrophic failure of pairing Miniclip with Eye of the Hurricane (EoH).
+
+
+---
 
 ## 📑 Project Report: AI - Auditor a.k.a The Judge  
 **Auditor Prompt (v7.9)**  
@@ -192,6 +209,10 @@ Status: ACTIVE
 - v2 (Local 3B): Intelligent but "rigid" regarding nomenclature.
 
 - v3 (Entity-Fuzzy 3B): Resilient and "context-aware," utilizing Semantic Expansion and Fuzzy Mapping to bridge the gap between messy Reddit slang and the Gold Truth Codex.
+
+---
+
+## ⚙️ Auditor Technical Architecture & Retrieval Logic
 
 ### 1. Data Pipeline Integration (2026-02-26)  
 The Trigger: Reaching the 17,014-entry Reddit dataset.
