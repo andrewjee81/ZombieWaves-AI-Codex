@@ -120,9 +120,11 @@ By shifting the data weight from Quantity to Mechanical Accuracy, the v5 model i
 - **Rationale:** To reduce instructional overhead and maximize processing speed on Reddit-sourced data.
 
 - **Persona Preservation:** The "Veteran" British English tone is deferred to the Training Phase, where it will be enforced via the System Prompt during SFT.
+
 ---
+
 ## 📑 Project Report: AI - Auditor a.k.a The Judge  
-**Auditor Prompt (v7.8)**  
+**Auditor Prompt (v7.9)**  
 **Engine:** Qwen2.5-3B-Instruct (4-bit)  
 **Logic Type:** Dual-Input (Context + Claim)  
 
@@ -138,13 +140,21 @@ By shifting the data weight from Quantity to Mechanical Accuracy, the v5 model i
 - **Tokenization:** Native support for complex technical terms and symbols common in gaming "Silver" data.
 
 **System Instruction:**  
+Prompt Version: 7.9
+Date: 2026-02-27
 
 ```Plaintext
-You are the Zombie Waves AI Quality Auditor. Your mission is to extract high-value mechanical strategy.  
-VERDICT RULES:  
-- [KEEP]: Advice is mechanically sound, contains specific synergies, or actionable strategy that aligns with the Codex.
-- [REJECT]: Advice contradicts the Codex or general high-tier veteran logic.
-- [TRASH]: Social noise, generic excitement ("I love this gun"), complaints, or off-topic chatter.
+You are the Zombie Waves AI Quality Auditor. Your mission is to extract actionable mechanical strategy and technical data.
+
+VERDICT RULES:
+- [KEEP]: Advice is mechanically sound, describes viable synergies, or contains specific technical data. **KEEP posts that mention specific trait trees (Frost, Fire, Reload), specific Stages, or numerical milestones (e.g., "1k attack," "Stage 35 tips").**
+- [REJECT]: Advice is factually wrong (e.g., losing Tesseracts on salvage) or suggests catastrophic anti-synergies (like Miniclip on high-capacity rifles).
+- [TRASH]: Social noise, generic excitement ("I love this gun"), complaints, or off-topic chatter that offers no strategic value.
+
+RESPONSE FORMAT:
+Provide your response in this format:
+VERDICT: [TAG]
+REASON: (One sentence explaining why based on the Codex or Veteran Logic)
 ```
 **User Template:**
 
@@ -153,12 +163,27 @@ MASTER CODEX REFERENCE: {relevant_codex}
 REDDIT POST TO AUDIT: {reddit_text}
 ```
 
+## ⚖️ Auditor Prompt Versioning: v7.9 (High-Yield Technical)  
+Date: 2026-02-27  
+Status: ACTIVE  
+
+**Key Changes:**
+- **Reasoning Injection:** Added `REASON:` field to generation to provide logical transparency for every verdict.
+
+- **Technical Expansion:** Explicitly instructed the model to `[KEEP]` posts involving Trait Trees (Frost/Fire/Reload), Numerical Milestones, and Stage-specific advice.
+
+- **Error Handling:** Redefined `[REJECT]` to strictly target Mechanical Misinformation (e.g., Tesseract loss) rather than just social noise.
+
+**Rationale:** > Previous versions (v7.x) were too "fact-locked" to the Master Codex, resulting in a low yield (0.5%). v7.9 allows the model to leverage its internal 3B-parameter training to validate general game physics while using the Codex for critical "Deal-breaker" rules.
+
+
 📂 Auditor Prompt History (v6.1 Strategy)
 | Version | Date | Engine | Key Logic Change | Impact |
 | :--- | :--- | :--- | :--- | :--- |
 | v1.0 |	2026-02-22 |	Regex (Python) |	Hardcoded keyword matching. |	High speed; zero context awareness. |
 | v2.0 |	2026-02-23 |	Llama-3.2-3B |	Zero-shot evaluation. |	Better "Trash" detection; 4GB VRAM limits. |
 | v7.8 |	2026-02-26 |	Qwen2.5-3B |	Fuzzy-RAG Integration. |	Maps community slang to Codex Truths. |
+| v7.9 |	2026-02-27 |	Qwen2.5-3B |	Technical High-Yield Audit. |	Reasoning-enabled filtering; Numerical & Trait-tree extraction. |
 
 **The Auditor's Evolution:**
 
