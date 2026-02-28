@@ -164,14 +164,14 @@ Date: 2026-02-27
 You are the Zombie Waves AI Quality Auditor. Your mission is to extract actionable mechanical strategy and technical data.
 
 VERDICT RULES:
-- [KEEP]: Advice is mechanically sound, describes viable synergies, or contains specific technical data. **KEEP posts that mention specific trait trees (Frost, Fire, Reload), specific Stages, or numerical milestones (e.g., "1k attack," "Stage 35 tips").**
-- [REJECT]: Advice is factually wrong (e.g., losing Tesseracts on salvage) or suggests catastrophic anti-synergies (like Miniclip on high-capacity rifles).
-- [TRASH]: Social noise, generic excitement ("I love this gun"), complaints, or off-topic chatter that offers no strategic value.
+- [KEEP]: If the post identifies a CORRECT game mechanic (e.g., Tesseracts return on salvage), it is [KEEP], even if there is no Codex entry for it.
+- JUDGE AS VETERAN: You are the Codex. If the Reddit user provides an accurate tactical tip that matches your internal knowledge of Zombie Waves, mark it [KEEP].
+- [REJECT]: Advice is factually wrong or suggests catastrophic anti-synergies.
+- [TRASH]: Social noise, generic excitement, complaints, or off-topic chatter with no actionable utility.
 
 RESPONSE FORMAT:
-Provide your response in this format:
 VERDICT: [TAG]
-REASON: (One sentence explaining why based on the Codex or Veteran Logic)
+REASON: (One concise sentence explaining the logic.)
 ```
 **User Template:**
 
@@ -201,6 +201,8 @@ Status: ACTIVE
 | v2.0 |	2026-02-23 |	Llama-3.2-3B |	Zero-shot evaluation. |	Better "Trash" detection; 4GB VRAM limits. |
 | v7.8 |	2026-02-26 |	Qwen2.5-3B |	Fuzzy-RAG Integration. |	Maps community slang to Codex Truths. |
 | v7.9 |	2026-02-27 |	Qwen2.5-3B |	Technical High-Yield Audit. |	Reasoning-enabled filtering; Numerical & Trait-tree extraction. |
+| v7.9.1 |	2026-02-27 |	Qwen2.5-3B |	Actionable Intelligence Pivot. |	Expanded [KEEP] to include Resource Integrity & System Navigation. |
+| v7.9.2 |	2026-02-27 |	Qwen2.5-3B |	Veteran Autonomy. |	Gave AI "Veteran" status to verify facts without requiring a Codex match. |
 
 **The Auditor's Evolution:**
 
@@ -250,3 +252,91 @@ The Trigger: Typos and "Messy" Reddit data (e.g., "Votlgun," "Lizi").
   - **Action:** Retrieval function now returns a structured dictionary (text, entity, rule).
   - **Rationale:** Decouples the "Context used by AI" from the "Logic cited in logs." 
   - **Benefit:** Allows for quantitative analysis of the 17k records (e.g., "What % of rejected posts were related to the eoh entity?").
+
+---
+## 🧠 Final Model Selection: Qwen-2.5-3B (The "Logic" Pivot)  
+Date: 2026-02-27  
+Status: CONFIRMED  
+Model: [unsloth/Qwen2.5-3B-Instruct-bnb-4bit](https://huggingface.co/unsloth/Qwen2.5-3B-Instruct-bnb-4bit)
+
+**Rationale for abandoning Llama-3B:**
+
+- **Vocabulary Density:** Qwen handles the complex nomenclature of Zombie Waves (e.g., "Gale Shinobi") with less token fragmentation.
+
+- **Hardware Harmony:** Optimized for Unsloth 4-bit, ensuring the "Long Burn" training stays within the 4GB VRAM limit of the RTX 3050.
+
+- **ChatML Native:** Perfectly aligns with the project's move to Conversational Architecture.
+
+
+## ⚖️ Auditor Refinement: The Economy Expansion (2026-02-27)
+```markdown
+### 🔍 Logical Audit Trace: 2026-02-27 13:21:45
+* **ENGINE:** Qwen2.5-3B-Instruct (4-bit Unsloth)
+* **max_new_tokens:** `60`
+* **VERDICT:** `[TRASH] - THE REDDIT POST DOES NOT CONTAIN ANY MECHANICAL STRATEGY OR TECHNICAL DATA RELATED TO THE GAME MECHANICS. IT IS A SIMPLE QUESTION ABOUT THE GAME'S FUNCTIONALITY THAT CAN BE ANSWERED BY CHECKING THE GAME'S USER INTERFACE OR DOCUMENTATION, WHICH IS OUTSIDE THE SCOPE OF PROVIDING MECHANICAL ADVICE.<|IM_END|>`
+* **MATCH FIDELITY:** `0%`
+* **REDDIT POST (Silver Claim):** > "Just wondering if anybody knows, when we salvage legendary weapons, do we get the legendary tesseract back? I just started but have made some good progress on a few guns. how do you salvage? I don't see that option anywhere. I'm either looking in the wrong places or thinking it unlocks later."
+* **CODEX ANCHOR (Gold Truth):** > "No specific Codex entry found. Evaluate based on general Zombie Waves veteran knowledge."
+* **MECHANICAL ALIGNMENT:** > Identified **salvage_mechanics** logic. Verified against: *"Standard Mechanics..."*
+```
+
+Action: Expanded [KEEP] criteria to include Resource Integrity (Salvage/Tesseracts/Materials).
+
+Rationale: While UI navigation is "Trash," the underlying mechanic of resource preservation is a "Strategic Pillar" that allows players to swap builds without penalty.
+
+Audit Impact: Expected to increase yield by 2-3% by capturing veteran advice regarding weapon resets and material recycling.
+
+## ⚖️ Auditor Calibration: The Depth Filter (2026-02-27)
+```markdown
+### 🔍 Logical Audit Trace: 2026-02-27 13:23:19
+* **ENGINE:** Qwen2.5-3B-Instruct (4-bit Unsloth)
+* **max_new_tokens:** `60`
+* **VERDICT:** `[TRASH] - THE ADVICE PROVIDED IS VAGUE AND DOES NOT CONTAIN SPECIFIC STEPS OR INFORMATION ABOUT GETTING BLUEPRINTS. IT ALSO LACKS DETAILS ABOUT WHICH MODULES CAN BE PURCHASED AND HOW TO OBTAIN DIAMONDS, WHICH ARE ESSENTIAL FOR THE PROCESS. ADDITIONALLY, THERE IS NO MENTION OF SPECIFIC STAGES OR MILESTONES, WHICH`
+* **MATCH FIDELITY:** `0%`
+* **REDDIT POST (Silver Claim):** > "How do you get blueprints? Anyone have a quick guide on this? Thanks A 2 step guide: 1) click the shop button in lower left corner. 2) purchase modules with diamonds."
+* **CODEX ANCHOR (Gold Truth):** > "No specific Codex entry found. Evaluate based on general Zombie Waves veteran knowledge."
+* **MECHANICAL ALIGNMENT:** > Identified **economy** logic. Verified against: *"Standard Mechanics..."*
+```
+
+- **Observation:** v7.9 is currently filtering out "Shallow Truths" (correct but brief advice).
+
+- **Action:** Monitoring yield. If "Gold" acquisition remains below 1% after 5,000 iterations, we will implement "v7.9.1: System Navigation" to allow high-utility tutorials into the dataset.
+
+- **Fidelity Note:** 0% Fidelity is expected here as "Blueprints" and "Modules" aren't weapons/heroes in your MASTER_MAPPING yet.
+
+## ⚖️ Auditor Logic: The "Actionable Intelligence" Standard (2026-02-27)
+
+- **Update:** Unified Combat and Economy rules into a single "Actionable Mechanical Intelligence" mandate.
+
+- **Rationale:** To ensure the Codex captures both "Micro-Strategy" (Combat) and "Macro-Strategy" (Economy/Progression), while still filtering out low-effort social noise.
+
+- **Goal:** Target a balanced yield that provides the final AI with the ability to answer "Where do I get X?" and "How do I build Y?" with equal authority.
+
+## 📜 The "Fresh Start"
+Date: 2026-02-27 
+Iterations: 2005/17014  
+Yield: 0% [KEEP]  
+Status: Cancelled  
+
+To nail both the "Hard Math" and the "Essential Logistics" without cluttering the prompt, we’re pivoting to an "Actionable Intelligence" all-rounder. The goal is to flag anything mechanically useful—whether it’s a high-tier weapon synergy or a basic currency breakdown—and strip away the social noise.
+
+*How to "Softened" the Judge for v7.9.1*
+```Plaintext
+- [KEEP]: The post contains Actionable Mechanical Intelligence. This includes:
+  1. Combat Strategy: Trait synergies (Frost/Fire/Reload), weapon milestones, or stage-clearing tactics.
+  2. Resource Logistics: Resource integrity (e.g., Tesseract/material returns), economy optimization (Diamond spending), or "System Navigation" for essential gear (Blueprints/Modules).
+```
+---
+
+Date: 2026-02-27  
+Iterations: 11267/17014    
+Yield: 0% [KEEP] 
+Status: Cancelled 
+
+The Auditor is doing too good of a job—it's rejecting everything because it's not finding a "Master Codex" match for every post. We're pivoting to v7.9.2 to let the Qwen model use its own "Veteran Brain" to verify truths. If it's a solid fact (like salvage returns), it's Gold, Codex or no Codex.
+
+*The "Context Injection"*
+```Plaintext
+- [KEEP]: If the post identifies a CORRECT game mechanic (e.g., Tesseracts return on salvage), it is [KEEP], even if there is no Codex entry for it.
+- JUDGE AS VETERAN: You are the Codex. If the Reddit user provides an accurate tactical tip that matches your internal knowledge of Zombie Waves, mark it [KEEP].
+```
