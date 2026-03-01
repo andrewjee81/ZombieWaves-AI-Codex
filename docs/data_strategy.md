@@ -312,12 +312,13 @@ Audit Impact: Expected to increase yield by 2-3% by capturing veteran advice reg
 
 - **Goal:** Target a balanced yield that provides the final AI with the ability to answer "Where do I get X?" and "How do I build Y?" with equal authority.
 
-## 📜 The "Fresh Start"
-Date: 2026-02-27 
+## 📜 Audit Status: The "Fresh Start" (2026-02-27)
+Prompt: v7.9
 Iterations: 2005/17014  
 Yield: 0% [KEEP]  
 Status: Cancelled  
 
+**Key Observation:** 
 To nail both the "Hard Math" and the "Essential Logistics" without cluttering the prompt, we’re pivoting to an "Actionable Intelligence" all-rounder. The goal is to flag anything mechanically useful—whether it’s a high-tier weapon synergy or a basic currency breakdown—and strip away the social noise.
 
 *How to "Softened" the Judge for v7.9.1*
@@ -328,15 +329,63 @@ To nail both the "Hard Math" and the "Essential Logistics" without cluttering th
 ```
 ---
 
-Date: 2026-02-27  
+## 📜 Audit Status: (2026-02-27)
+Prompt: 7.9.1
 Iterations: 11267/17014    
 Yield: 0% [KEEP] 
 Status: Cancelled 
 
+**Key Observation:**  
 The Auditor is doing too good of a job—it's rejecting everything because it's not finding a "Master Codex" match for every post. We're pivoting to v7.9.2 to let the Qwen model use its own "Veteran Brain" to verify truths. If it's a solid fact (like salvage returns), it's Gold, Codex or no Codex.
 
-*The "Context Injection"*
+*The "Context Injection for v7.9.2"*
 ```Plaintext
 - [KEEP]: If the post identifies a CORRECT game mechanic (e.g., Tesseracts return on salvage), it is [KEEP], even if there is no Codex entry for it.
 - JUDGE AS VETERAN: You are the Codex. If the Reddit user provides an accurate tactical tip that matches your internal knowledge of Zombie Waves, mark it [KEEP].
 ```
+
+## 📜 Audit Status: The 10K Pivot & Discovery (2026-02-28)
+Prompt: 7.9.2  
+Iterations: 10214/17014  
+Yield: 0% [KEEP]  
+Status: Cancelled  
+
+**Key Observations:**
+
+- **Ghost Code Identified:** Discovered a logic break where identified_entity failed to pass to search_terms. This effectively severed the Auditor from the Master Codex during the entire run.
+
+- **Model Validation:** Despite the broken link, visual audit of the logs confirms the Qwen-3B model performed with high accuracy. It correctly identified game systems (Tesseracts, Aero Chess, Blueprints) using only its "Internal Veteran" weights.
+ 
+- **The "Desert" Confirmed:** The 10k control set proves that early-era community data is high in social noise and low on "Elite" strategy, triggering the Auditor's high-precision rejection logic.
+
+**Strategic Pivot (v8.0):**  
+- **From Judge to Cartographer:** Shifting from "Elite Filtering" to Discovery & Labeling.
+
+- **Negative Mining:** The 10k "Trash" log will be mined via script to extract "Shallow Truths" (basic mechanics like Passive Stat Stacking) to build a secondary Game Mechanics Codex.
+
+- **Recovery:** Restored the "Context Bridge" (v7.9.3) to ensure Gold Truths flow correctly in future burns.
+
+---
+
+***Variable Ghosting***  
+Caught a major ghost in the machine. The fuzzy matcher was finding the weapons, but the script was dropping the ball before passing them to the Codex search. We’ve patched the bridge between mapping and retrieval in v7.9.3. Even though we’re still moving toward the v8.0 "Discovery" plan, this fix ensures the Auditor actually has the "Gold Truth" in its hands for the rest of the burn.
+
+---
+### Summary of Change for the "Veteran" Note:  
+A review of the 7.9.1 and 7.9.2 logs revealed that while the [KEEP] rate was zero, the AI's internal reasoning remained highly accurate. The 'light bulb moment' was realizing that by auditing these 'Trash' responses, we could extract the very game mechanic truths the model was already identifying. We are essentially turning these negative results into a positive advantage by using the 10k baseline to build a new 'Game Mechanics' layer for v8.0.
+
+**1. Post-Mortem: The 10K Control Set (v7.9.2)**  
+- **Result:** 10,214 iterations / 0 [KEEPS].
+
+- **Root Cause Discovery:** Found a logic break where identified_entity failed to pass to search_terms. The Auditor was essentially "blinded" from the Codex during the entire run.
+
+- **Validation:** Analysis of the logs confirms that Qwen-3B correctly identified mechanics (Tesseracts, Aero Chess, Blueprints) using only internal weights. This proves the "Veteran Logic" is sound, even without the Gold Truth bridge.
+
+**2. Strategic Pivot: The Discovery Protocol**  
+We are shifting from Elite Filtering to Baseline Mapping. The goal is no longer just finding "Gold" strategy, but cataloguing the "Shallow Truths" that define the game's foundation.
+
+- **Target:** Extract identified mechanics from the 10k "Trash" log.
+
+- **Categorisation:** Blueprints, Weapons, Heroes, Economy (Aero Chess), and System Navigation.
+
+- **The "Owned = Active" Logic:** A primary focus for v8.0 is documenting passive stat stacking (Decorations, Statues, and Collectibles).
