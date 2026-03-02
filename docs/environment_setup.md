@@ -132,18 +132,65 @@ Initially, this project was designed to leverage public Reddit data. However, to
 
 By combining these sources, the model gains a balanced perspective of both long-form theory (Reddit) and tactical, "on-the-ground" advice (Discord/YouTube).
 
+## 📈 Model Evolution & Roadmap  
+The AI Codex has transitioned through three major "engine" phases to balance high-fidelity strategy with the 4GB VRAM limit of the RTX 3050.
+
+**Phase 1: The Foundation (v1 – v7.9)**
+- **Model:** Llama-3.2-3B-Instruct-bnb-4bit
+
+- **Role:** Initial validation of the "Judge" logic.
+
+- **Key Achievement:** Proved that Unsloth and 4-bit quantization could run a 3B model on consumer hardware. Established the project's move from Alpaca to the ChatML architecture.
+
+**Phase 2: The Logic Pivot (v7.9.1 – v8.0)**  
+- **Model:** Qwen2.5-3B-Instruct
+
+- **Role:** Current engine for the v8.0 "Discovery" pivot.
+
+- **Why Qwen?** Improved handling of structured JSON and technical game nomenclature. It serves as the primary "Veteran Auditor" for mining the 10k Reddit trash logs.
+
+**Phase 3: The Agentic Endgame (v8.1+ Upgrade)**
+- **Model:** Qwen 3.5-35B-A3B
+
+- **Release Date:** February 2026
+
+- **Architecture:** Sparse Mixture-of-Experts (MoE) + Gated Delta Networks.
+
+- **Active Parameters:** 35B total / 3B Active.
+
+- **Key Features for Codex:** * Native Vision: High-speed translation of Chinese event guides (replacing the separate VL model).
+
+   - **Thinking Mode:** Uses `<think>` tags to reason through complex math (e.g., diamond ROI for 70-lap S-Tier jackpots) before outputting.
+
+   - **VRAM Profile:** Fits in 4GB VRAM using Q3_K_S GGUF (~3.4GB total), providing 35B-level intelligence at 3B speeds.
+
+
+## 🔗 Model Resource
+- [Qwen 3.5 Official Blog](https://qwen.ai/blog?id=qwen3.5): Documentation on the "Native Multimodal" architecture.
+
+- [Hugging Face: Qwen3.5-35B-A3B](https://huggingface.co/Qwen/Qwen3.5-35B-A3B): The target repository for future fine-tuning.
+
+- [Video: China’s Qwen 3.5 Shocked the AI World](https://www.youtube.com/watch?v=bd9Kca03Gpk): A technical breakdown of the MoE engine we will use for v8.1.
+
+
 ## 🎓 Learning Resources & Credits
 
 This project follows the modern 'Local LLM Fine-Tuning' pipeline. I am by no means an expert; like many of you, I am learning as I go. If you are new to AI training, I highly recommend the following resources that were instrumental in helping me understand and implement this project:  
 
-### 📺 Key Video Tutorials
-* **[How to Fine-Tune Llama 3 Locally](https://www.youtube.com/watch?v=pxhkDaKzBaY)** - A comprehensive guide on the entire pipeline from data to local deployment.
-* **[Unsloth: Formatting Datasets for Chat](https://www.youtube.com/watch?v=Lt7KrFMcCis)** - This was the catalyst for moving from Alpaca to ChatML. It explains how 'Supervised Fine-Tuning' (SFT) works better when the data follows a conversational role-based structure.
-* **[Discord Data for AI](https://www.youtube.com/watch?v=Oms0D-A88JY)** - Understanding why data cleaning is the most critical step in the process.
-
-### 📖 Essential Technical Reading
+### 🧠 Core AI Theory & Mechanics
+* **[How LLMs Actually Generate Text (LearnThatStack)](https://youtu.be/NKnZYvZA7w4?si=9X2JG-JljUm_8gBV):** A foundational guide explaining the mechanical "loop" of AI. It covers how text is converted into tokens and vectors, how the "Attention" mechanism focuses on context, and how the model uses probability to guess the next word one piece at a time. Essential for understanding why models hallucinate and how settings like "Temperature" influence the Codex's responses.
 * **[The Case for ChatML (OpenAI Standard)](https://github.com/openai/openai-python/blob/main/chatml.md):** I transitioned from the Alpaca instruction format to **ChatML** after researching how modern LLMs handle roles (`system`, `user`, `assistant`). This documentation explains the security and clarity benefits of separating instructions from content.
+* **[Unsloth: Formatting Datasets for Chat](https://www.youtube.com/watch?v=Lt7KrFMcCis):** This was the catalyst for moving from Alpaca to ChatML. It explains how 'Supervised Fine-Tuning' (SFT) works better when the data follows a conversational role-based structure.
+
+### 🚀 The Qwen 3.5 "Agentic" Era
+* **[Qwen 3.5: Towards Native Multimodal Agents (Official Blog)](https://qwen.ai/blog?id=qwen3.5):** Documentation on the "Native Multimodal" architecture. This provides the technical foundation for the MoE (Mixture of Experts) architecture and agentic capabilities.
+* **[Video: China’s Qwen 3.5 Shocked the AI World](https://www.youtube.com/watch?v=bd9Kca03Gpk):** A technical breakdown of the MoE engine we will use for v8.1. Explains the A3B (Active 3 Billion) mechanism and how "Thinking Mode" enables complex ROI calculations for in-game resource spending.
+* **[Hugging Face: Qwen3.5-35B-A3B](https://huggingface.co/Qwen/Qwen3.5-35B-A3B):** The target repository for future fine-tuning. This is the roadmap for fitting 35B-level reasoning into our 4GB VRAM limit.
+
+### ⚙️ Hardware & Deployment
 * **[Unsloth Chat Templates Documentation](https://unsloth.ai/docs/basics/chat-templates):** This resource was instrumental in aligning our `master_codex_data.jsonl` with the native Llama-3-Instruct format to ensure the model maintains its 'Expert Strategy Assistant' persona.
+* **[How to Fine-Tune Llama 3 Locally](https://www.youtube.com/watch?v=pxhkDaKzBaY):** A comprehensive guide on the entire pipeline from data to local deployment.
+* **[Discord Data for AI](https://www.youtube.com/watch?v=Oms0D-A88JY)** - Understanding why data cleaning is the most critical step in the process.
 
 ### 🛠️ Core Technologies Used
 * **[Unsloth AI](https://github.com/unslothai/unsloth):** Used for 2x faster, 80% less memory fine-tuning on consumer GPUs.
