@@ -24,7 +24,6 @@ graph TD
     subgraph Sources [Raw Data Sources]
         D_Raw[Discord JSON<br/>39k Messages]
         R_Raw[Reddit JSON<br/>Strategy Threads]
-        Y_Raw[YouTube Transcripts<br/>Video Content]
         G_Raw[In-Game Codex<br/>Official Stats]
     end
 
@@ -32,7 +31,6 @@ graph TD
     subgraph Processing [Cleaning & Refinement]
         D_Clean[clean-discord.py<br/>Detox & Antispam]
         R_Refine[refiner.py<br/>Karma-Weighted Filter]
-        Y_Chunk[Chunker Script<br/>Synth & Summarize]
     end
 
     %% Transformation Layer
@@ -47,13 +45,14 @@ graph TD
         Tokenize[Tokenization]
     end
 
-    %% GPU Optimization Layer
-    subgraph GPU_Optimization [4GB VRAM Rig]
-        Loader{Unsloth Loader}
-        NF4[4-bit NF4 Quant]
-        GRAD[Gradient Checkpointing]
-        RANK[LoRA Rank: 8]
-        MSL[Max Seq Length: 1024]
+    %% GPU Optimization Layer (Updated v6.2 - Google 2026)
+    subgraph GPU_Optimization [4GB VRAM Rig + TurboQuant+]
+        Loader{Unsloth / FastLanguageModel}
+        TQ_Core[TurboQuant Engine]
+        QJL_Fix[QJL Error Correction]
+        NF4[4-bit NF4 Weight Quant]
+        MSL[Max Seq Length: 8192]
+        VRAM_BUF[VRAM Buffer: ~1.0GB]
     end
 
     %% Final Output
@@ -64,12 +63,10 @@ graph TD
     %% Main Flow Connections
     D_Raw --> D_Clean
     R_Raw --> R_Refine
-    Y_Raw --> Y_Chunk
     G_Raw --> ChatML_Conv
 
     D_Clean --> ChatML_Conv
     R_Refine --> ChatML_Conv
-    Y_Chunk --> ChatML_Conv
 
     System_Prompt --> ChatML_Conv
     ChatML_Conv --> Master_File
@@ -77,13 +74,13 @@ graph TD
     Tokenize --> Loader
 
     %% Optimization Connections
-    Loader --> NF4
-    Loader --> GRAD
-    Loader --> RANK
-    Loader --> MSL
+    Loader --> TQ_Core
+    TQ_Core --> QJL_Fix
+    QJL_Fix --> NF4
+    NF4 --> MSL
 
     %% Finalizing
-    NF4 & GRAD & RANK & MSL --> Final_Weights
+    MSL --> Final_Weights
 ```
 
 
@@ -119,8 +116,19 @@ The Zombie Waves AI Codex is trained on a high-signal dataset engineered for con
    - **Contextual Pairing:** Discord message blocks are logically grouped to maintain conversational flow, while Reddit threads are karma-weighted to pair the most accurate expert response with the user's query.
    - **System Guardrails:** Every entry is anchored with a project-specific System Prompt to maintain persona integrity and domain focus.
   
-4. Hardware-Aware Optimisation
-   The pipeline incorporates specific memory-efficiency guardrails to facilitate training on consumer-grade GPUs (4GB VRAM). See [environment_setup.md](.docs/environment_setup.md) for full hardware configurations.
+4. Hardware-Aware Optimisation (v6.1) (2026-03-27)    
+The Zombie Waves AI Codex pipeline incorporates specific memory-efficiency guardrails to facilitate high-capacity auditing on consumer-grade GPUs (4GB VRAM).
+
+    - **Legacy Baseline (v1.0 - v5.0):** The project was initially established using standard 4-bit NF4 Quantization and Gradient Checkpointing to fit a 1024-token context window. Detailed steps on this initial hardware bridging and environment configuration can be found in [environment_setup.md](.docs/environment_setup.md).
+
+    - **The v6.1 Breakthrough (TurboQuant/QJL):** To transition the model from a "Summariser" to a "Deep-Context Auditor," we have implemented TurboQuant-style KV Cache compression (via Unsloth q4_k kernels) and QJL error correction.
+
+    - **Context Expansion:** By shrinking the memory footprint of the conversation history by approximately 6x, we have expanded the Max Seq Length from 1024 to 8192 tokens.
+
+    - **Qwen 2.5 Synergy:** This setup specifically utilizes the Qwen 2.5 3B-Instruct model, which maintains "Gold Truth" accuracy even under heavy cache quantization, allowing for the ingestion of entire Reddit threads in a single inference pass.
+  
+    - **Methodology:** This optimization is grounded in the Google Research report (March 24, 2026) and as documented by Tom's Hardware (March 25, 2026) regarding the 6x reduction in memory requirements.
+
 
 ## 🚀 Current Status: Data Acquisition & Training
 
@@ -132,11 +140,12 @@ The Zombie Waves AI Codex is trained on a high-signal dataset engineered for con
 ### 📊 Data Pipeline
 - [x] **Data Extraction:** Successfully extracted from 23-05-2023 - 03-02-2026 Snapshot.
 - [x] **Data Cleaning:** Custom Regex & Nested List fixes applied to `clean-discord`.
-- [ ] **YouTube Knowledge (Phase 2):** Transcript extraction and formatting.
 
-### 🧪 Model Development
-- 🔄 **Fine-Tuning Execution:** Currently in progress using Unsloth (LoRA adapters).
-- [ ] **Model Evaluation:** Testing against known Zombie Waves strategy benchmarks.
+### 🧪 Model Development & Optimization
+- 🔄 Fine-Tuning: Utilizing Unsloth (LoRA adapters) for Qwen 2.5 3B instruction-tuning.
+- ⚡ Inference Engine: Migrated to TurboQuant+ (LMDeploy) to bypass 4GB VRAM hardware constraints.
+- 🧠 KV Cache Compression: Enabled 4-bit/8-bit quantization to prevent response truncation during long strategy audits.
+- 📊 Model Evaluation: Real-time benchmarking against 'Gold Truth' Zombie Waves mechanics (v2026.03).
 
 ## 📂 Project Structure
 

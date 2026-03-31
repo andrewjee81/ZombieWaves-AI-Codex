@@ -1,39 +1,31 @@
-## 🛣️ Zombie Waves AI Codex: Data Quality Roadmap (2026-02-25)
-1. Evolution of the Auditor Strategy  
-This section chronicles the transition from simple filtering to intelligence-based logic verification to overcome hardware constraints.
+## 🛣️ Zombie Waves AI Codex: Strategic Roadmap (v8.1 Update)
 
-Phase 1: Heuristic Scripting (The Regex Era)  
-- **Method:** Utilised _utils/auditor_python.py focusing on keywords and formatting.
-
+### Phase 1: Heuristic Scripting (The Regex Era)
+- **Method:** Utilised `_utils/legacy/auditor_python.py` focusing on keywords and formatting.
 - **Pros:** Fast; zero VRAM footprint.
+- **Status:** ✅ Completed (Tools archived in `_utils/legacy`).
 
-- **Cons:** High noise floor; unable to identify mechanical contradictions like the "Miniclip on EoH" conflict.
-
-Phase 2: Local Semantic Judge (The 3B Era)
-- **Method:** Employed a Llama-3.2-3B-Instruct judge model on the local RTX 3050.
-
+### Phase 2: Local Semantic Judge (The 3B Era)
+- **Method:** Employed a **Qwen 2.5 3B-Instruct** judge model on the local RTX 3050.
 - **Environment:** Ubuntu 24.04.1 LTS via WSL2.
+- **Constraint:** Initial 4GB VRAM limit restricted reasoning depth to a 1024-token context window.
 
-- **Cons:** 4GB VRAM limit restricted the model's reasoning depth; prone to "hallucinated" advice when processing high-volume Reddit data.
-
-Phase 3: Cloud-Hybrid Logic
-- **Method:** Qwen2.5-7B-Instruct (4-bit Unsloth) hosted on Google Colab.
-
-- **Strategy:** Direct-Inference & Checkpointing.
-
+### Phase 3: The TurboQuant+ Breakthrough (Current)
+- **Method:** Migration to **TurboQuant+ Engine** with **QJL Error Correction**.
+- **Strategy:** Implementation of 6x KV Cache compression based on **March 2026 Google Research**.
 - **Key Changes:**
-    - **Logic over Language:** Removed British English constraints during the audit to prevent instructional noise and speed up processing of American-sourced Reddit data.
-    - **Assistant Pre-filling:** Used the `Assistant: [` prompt hack to bypass "Chain of Thought" reasoning, increasing throughput from 1 sample/sec to ~4 samples/sec.
-    - **Distributed Processing:** Utilised three separate Google Colab accounts to bypass free-tier compute limits, managed via a line-count checkpointing script.
-    - **Nomenclature Alignment:** Focused purely on enforcing mechanical truths (e.g., MX Reload Loop and EoH Dodge Logic) as defined in the `master_codex.jsonl`.
+    - **Context Expansion:** Native support for **8192-token** sequences on 4GB VRAM.
+    - **Local Independence:** Transitioned away from Cloud-Hybrid (Google Colab) dependencies by optimising local inference kernels.
+    - **Gold Truth Verification:** Integration of **Veteran-led weighting** to resolve Discord/Reddit contradictions.
 
-- **Goal:** To produce verified_reddit_gold.jsonl, a mechanically perfect dataset that acts as a "Silver-to-Gold" bridge for final 3B training.
+### Phase 4: The Multimodal Strategy Oracle (v8.2+)
+- **Model Shift:** Transitioning to **Qwen 2.5 Omni (4-bit)** to enable visual-spatial reasoning.
+- **Goal:** Allow the model to analyse **Hero/Gear screenshots** to provide tailored advice without manual stat entry.
+- **Philosophy:** Focus remains on being a **Technical Strategy Guide**. This preserves the project's educational focus while ensuring 100% user-controlled execution (Non-Agentic).
 
 ---
 
 ## 🛠️ Technical Decisions & Constraints
-- **The 3050 VRAM Ceiling:** Fixed at 4096 MiB. This necessitated moving the "heavy thinking" (the audit) to the cloud so the local GPU remains dedicated to the final Supervised Fine-Tuning (SFT).
-
-- **Nomenclature Standardisation:** Strict enforcement of terms like "Boreas" and "MX Reload Loop" to prevent identity fragmentation in the model's weights.
-
-- **Mechanical Denials:** Absolute rejection of any advice suggesting Miniclip for Eye of the Hurricane (EoH).
+- **The 4GB VRAM Ceiling:** Fixed at 4096 MiB. This necessitates the continued use of **TurboQuant+** and **Nightly PyTorch** builds.
+- **Nomenclature Standardisation:** Strict enforcement of terms like "Boreas" and "MX Reload Loop" to prevent identity fragmentation.
+- **Mechanical Denials:** Absolute rejection of "Mechanical Conflicts" (e.g., pairing Miniclip with Eye of the Hurricane).

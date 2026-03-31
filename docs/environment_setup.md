@@ -10,20 +10,22 @@ The primary issue was a three-way version mismatch between the stable release of
 - **Error 1:** `AttributeError: module 'torch' has no attribute 'int1'`. This occurred because `torchao` attempted to use 1-bit quantization features introduced in PyTorch 2.6, but the environment was on 2.5.
 - **Error 2:** `ResolutionImpossible`. Manual attempts to downgrade `transformers` to 4.47.1 failed because Unsloth 2026.1.4 has a hard dependency floor of `transformers >= 4.51.3`.
 
-## 2. The "Nightly" Pivot
-To fix the `int1` error, we moved from the stable PyTorch branch to the **Nightly (Preview)** build. This provided the necessary C++ headers for the new data types.
+## 2. The "Nightly" Pivot (Updated 2026-03-28)
+To fix the initial `int1` errors and enable **TurboQuant+ / QJL error correction**, we moved from the stable PyTorch branch to the **Nightly (Preview)** build.
 
+- **Rationale:** Stable PyTorch releases (v2.5.x) lack the low-level bit-manipulation kernels required for the 6x KV Cache compression described in the [Research & Credits](./research_&_credits.md) document.
+- **Hardware Synergy:** This pivot is mandatory for the RTX 3050 (4GB) to handle 8192-token sequences without "Truncation Errors."
 - **Command:** ```bash
-  pip install --pre torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/nightly/cu121](https://download.pytorch.org/whl/nightly/cu121) --force-reinstall```
+  pip install --pre torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/nightly/cu121](https://download.pytorch.org/whl/nightly/cu121) --force-reinstall
 
-3. The Triton Optimization Bug
+## 3. The Triton Optimization Bug
 After the Nightly install, a new error appeared: `RuntimeError: Unexpected optimization option triton.enable_persistent_tma_matmul`.
 
 Cause: The Unsloth `GRPOTrainer` (Reinforcement Learning) was attempting to use an experimental Triton flag not yet supported by the specific Nightly build installed.
 
 Impact: This crashed the entire `unsloth` import process, even for standard training.
 
-4. Surgical Bypass (The "Dummy" File)
+## 4. Surgical Bypass (The "Dummy" File)
 Since the project does not require Reinforcement Learning (RL) features, we manually disabled the broken module.
 
 Move: Renamed the broken RL module: `mv .../unsloth/models/rl.py .../unsloth/models/rl.py.bak`
@@ -149,51 +151,11 @@ The AI Codex has transitioned through three major "engine" phases to balance hig
 
 - **Why Qwen?** Improved handling of structured JSON and technical game nomenclature. It serves as the primary "Veteran Auditor" for mining the 10k Reddit trash logs.
 
-**Phase 3: The Agentic Endgame (v8.1+ Upgrade)**
-- **Model:** Qwen 3.5-35B-A3B
+**Phase 3: The Multimodal Oracle (v8.1+ Upgrade)**  
+- **Model Shift:** Transition from standard LLMs to Qwen 2.5 Omni (4-bit) to enable visual-spatial reasoning (Hero/Gear screenshot analysis).
 
-- **Release Date:** February 2026
+- **Hardware Optimization:** Utilizing TurboQuant+ and QJL error correction to maintain a 4096+ context window on an RTX 3050 (4GB).
 
-- **Architecture:** Sparse Mixture-of-Experts (MoE) + Gated Delta Networks.
+- **The "Guide" Philosophy:** Moving away from agentic execution to focus on Deep-Context Strategy Auditing—transforming the model into the ultimate technical manual for the community.
 
-- **Active Parameters:** 35B total / 3B Active.
-
-- **Key Features for Codex:** * Native Vision: High-speed translation of Chinese event guides (replacing the separate VL model).
-
-   - **Thinking Mode:** Uses `<think>` tags to reason through complex math (e.g., diamond ROI for 70-lap S-Tier jackpots) before outputting.
-
-   - **VRAM Profile:** Fits in 4GB VRAM using Q3_K_S GGUF (~3.4GB total), providing 35B-level intelligence at 3B speeds.
-
-
-## 🔗 Model Resource
-- [Qwen 3.5 Official Blog](https://qwen.ai/blog?id=qwen3.5): Documentation on the "Native Multimodal" architecture.
-
-- [Hugging Face: Qwen3.5-35B-A3B](https://huggingface.co/Qwen/Qwen3.5-35B-A3B): The target repository for future fine-tuning.
-
-- [Video: China’s Qwen 3.5 Shocked the AI World](https://www.youtube.com/watch?v=bd9Kca03Gpk): A technical breakdown of the MoE engine we will use for v8.1.
-
-
-## 🎓 Learning Resources & Credits
-
-This project follows the modern 'Local LLM Fine-Tuning' pipeline. I am by no means an expert; like many of you, I am learning as I go. If you are new to AI training, I highly recommend the following resources that were instrumental in helping me understand and implement this project:  
-
-### 🧠 Core AI Theory & Mechanics
-* **[How LLMs Actually Generate Text (LearnThatStack)](https://youtu.be/NKnZYvZA7w4?si=9X2JG-JljUm_8gBV):** A foundational guide explaining the mechanical "loop" of AI. It covers how text is converted into tokens and vectors, how the "Attention" mechanism focuses on context, and how the model uses probability to guess the next word one piece at a time. Essential for understanding why models hallucinate and how settings like "Temperature" influence the Codex's responses.
-* **[The Case for ChatML (OpenAI Standard)](https://github.com/openai/openai-python/blob/main/chatml.md):** I transitioned from the Alpaca instruction format to **ChatML** after researching how modern LLMs handle roles (`system`, `user`, `assistant`). This documentation explains the security and clarity benefits of separating instructions from content.
-* **[Unsloth: Formatting Datasets for Chat](https://www.youtube.com/watch?v=Lt7KrFMcCis):** This was the catalyst for moving from Alpaca to ChatML. It explains how 'Supervised Fine-Tuning' (SFT) works better when the data follows a conversational role-based structure.
-
-### 🚀 The Qwen 3.5 "Agentic" Era
-* **[Qwen 3.5: Towards Native Multimodal Agents (Official Blog)](https://qwen.ai/blog?id=qwen3.5):** Documentation on the "Native Multimodal" architecture. This provides the technical foundation for the MoE (Mixture of Experts) architecture and agentic capabilities.
-* **[Video: China’s Qwen 3.5 Shocked the AI World](https://www.youtube.com/watch?v=bd9Kca03Gpk):** A technical breakdown of the MoE engine we will use for v8.1. Explains the A3B (Active 3 Billion) mechanism and how "Thinking Mode" enables complex ROI calculations for in-game resource spending.
-* **[Hugging Face: Qwen3.5-35B-A3B](https://huggingface.co/Qwen/Qwen3.5-35B-A3B):** The target repository for future fine-tuning. This is the roadmap for fitting 35B-level reasoning into our 4GB VRAM limit.
-
-### ⚙️ Hardware & Deployment
-* **[Unsloth Chat Templates Documentation](https://unsloth.ai/docs/basics/chat-templates):** This resource was instrumental in aligning our `master_codex_data.jsonl` with the native Llama-3-Instruct format to ensure the model maintains its 'Expert Strategy Assistant' persona.
-* **[How to Fine-Tune Llama 3 Locally](https://www.youtube.com/watch?v=pxhkDaKzBaY):** A comprehensive guide on the entire pipeline from data to local deployment.
-* **[Discord Data for AI](https://www.youtube.com/watch?v=Oms0D-A88JY)** - Understanding why data cleaning is the most critical step in the process.
-
-### 🛠️ Core Technologies Used
-* **[Unsloth AI](https://github.com/unslothai/unsloth):** Used for 2x faster, 80% less memory fine-tuning on consumer GPUs.
-* **[DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter):** The gold standard for extracting raw community knowledge.
-* **[Clean-Discord (Forked)](https://github.com/andrewjee81/clean-discord):** Modified to support modern 19-digit Discord IDs and nested structures.
-* **[Scraping YouTube with OpenAI (Eli the Computer Guy)](https://www.youtube.com/watch?v=2TL3DgIMY1g):** Provided the logic for our YouTube Transcript Chunker, converting long-form video audio into structured strategy pairs.
+- **Zero-Action Protocol:** Ensuring the system remains a "Read/Analyze/Advise" engine rather than an autonomous actor, preserving the project's educational research status.

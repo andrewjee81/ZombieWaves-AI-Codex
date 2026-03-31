@@ -1,8 +1,8 @@
 ## 📊 Data Strategy: Zombie Waves AI Codex
 ### 1. Vision & Narrative
-The Zombie Waves AI Codex is a specialized expert system designed to provide high-fidelity strategy advice. To achieve a "teammate" feel rather than a "search engine" feel, the project transitioned from a static instruction format to a Conversational ChatML architecture.  
+The Zombie Waves AI Codex is a specialised expert system designed to provide high-fidelity strategy advice. To achieve a "teammate" feel, the project transitioned to a **Conversational ChatML architecture**. 
 
-We utilize a multi-source data pipeline, integrating Discord community intelligence, Reddit strategy threads, and in-game mechanics to create a unified knowledge base.
+With the **v8.1 pivot**, the Codex prioritises high-signal text (Discord/Reddit) and official mechanics, **deprecating automated video transcripts** to maintain a "Gold Truth" baseline.
 
 ### 2. The Great Pivot: Alpaca to ChatML
 Initially, the project utilized the Alpaca Format (Instruction, Input, Output). However, we shifted to ChatML (System, User, Assistant) for the following strategic reasons:
@@ -14,21 +14,24 @@ Initially, the project utilized the Alpaca Format (Instruction, Input, Output). 
 - **Llama 3 Native Alignment:** Modern models like Llama 3 are pre-trained on conversational tokens. ChatML leverages this "native grammar" for more natural responses.
 
 ### 3. Data Processing Pipeline
-A. Discord Intelligence
- - **Source:** Raw JSON exports from clean-discord.
- - **Processing:**
-   - **Detox & Antispam:** Removed toxicity and bot commands using library flags.
-   - **Conversational Grouping:** Logic treats the first message in a timestamp-grouped block as the user and subsequent replies as a single assistant block.
-   - **Anonymization:** Strips Discord handles and IDs to preserve community privacy.
+**A. Discord Intelligence**
+- **Source:** Raw JSON exports from `DiscordChatExporter`.
+- **Processing:**
+  - **Detox & Antispam:** Programmatic removal of bot commands and social toxicity.
+  - **Conversational Grouping:** Implements a **45-minute temporal window** to cluster fragmented messages into cohesive strategic sessions, ensuring the ChatML transformation preserves multi-turn context.
 
-B. Reddit Strategy
- - **Source:** High-karma strategy threads (refined_training_data.jsonl).
- - **Processing:**
-   - **Karma-Weighted Filtering:** Only top-voted comments were selected to ensure the "Assistant" provides "Meta" (optimal) advice.
-   - **Markdown Normalization:** Removed Reddit-specific links and flattened excessive newlines to optimize token efficiency.
+**B. Reddit Strategy Threads**
+- **Source:** Scraped JSON threads from r/ZombieWaves.
+- **Refinement:** - **Tier 1 (Karma-Weighted):** Initial sort to prioritize high-engagement community advice.
+  - **Tier 2 (AI Judge):** Utilises **Qwen 2.5 3B** to perform semantic auditing. The model cross-references community claims against "Gold Truth" mechanics (e.g., enforcing the **MX Reload Loop**), discarding high-karma "chatter" that contains mechanical inaccuracies.
 
-Legacy data preparation scripts (Alpaca-to-ChatML, Noise Filtering, and JSONL Merging) are archived in the _utils directory to maintain a clean production environment.
+~~**C. YouTube Synthesis**~~ 
+> [DEPRECATED v8.1]: This source was removed due to high noise floors and outdated 2024/2025 meta-data found in automated transcripts.
 
+**C. Official In-Game Codex & Veteran Validation**
+- **Source:** Direct extraction of weapon stats, hero passives, and resonance effects.
+- **Role:** Acts as the "Hard Logic" anchor to resolve conflicts between community theories and actual game code.
+- **Veteran Verification Pass:** Refined data forms are submitted to veteran players (Top-tier Arena/Guild leaders) to assign "Authority Weights." This ensures that the model prioritizes battle-tested synergies over theoretical calculations.
 
 ### 4. The Unified Guardrail (System Prompt)
 Every training row is anchored by the following constant:
@@ -61,15 +64,18 @@ SYSTEM_PROMPT = (
 2. Generate a new Augmented Training Set with the 5x weighting.
 3. Retrain on the updated pool to prevent "Catastrophic Forgetting" and maintain a unified intelligence.
 
+### 8. Legacy & Provenance
+To maintain a clean production environment, the original transition tools have been deprecated and moved to the `_utils/legacy` directory.
+- **Tools Archived:** Alpaca-to-ChatML converters, initial Regex noise filters, and early-stage JSONL merging scripts.
+- **Purpose:** These serve as a historical record of the **v1.0–v5.0** development phase and provide a fallback for regenerating baseline datasets if required.
+
 ## Implementation Status
 
 | Source | Status | Format | Count (Approx) |
 | :--- | :--- | :--- | :--- |
 | **Discord Intelligence** | ✅ **Processed** | ChatML | ~3,000 Samples |
 | **Reddit Strategy** | ✅ **Processed** | ChatML |  ~16,069 Samples |
-| **YouTube Transcripts** | ✅ **Processed** | ChatML | 11 Samples |
-| **In-Game Codex (High Level)** | ✅ **Processed** | ChatML | 115 Samples |
-| **PDF Strategy (High Level)** | ✅ **Processed** | ChatML | 45 Samples |
+| **In-Game Codex (High Level)** | ✅ **Processed** | ChatML | 226 Samples |
 
 ---
 ## 📑 Project Report: The v5 Technical Pivot
